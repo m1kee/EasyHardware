@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Profile]
+(
+	[Id] INT NOT NULL CONSTRAINT [PK_ProfileId] PRIMARY KEY IDENTITY(1,1),
+	[Name] NVARCHAR(25) NOT NULL,
+	[Description] NVARCHAR(250) NOT NULL,
+	[Active] BIT NOT NULL CONSTRAINT [DF_ProfileActive] DEFAULT (1)
+)
