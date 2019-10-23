@@ -1,4 +1,0 @@
-﻿CREATE TABLE [dbo].[PurchaseState]
-(
-	[Id] INT NOT NULL CONSTRAINT [PK_PurchaseStateId] PRIMARY KEY IDENTITY(1,1)
-)

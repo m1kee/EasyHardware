@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Stock]
+(
+	[Id] INT NOT NULL CONSTRAINT [PK_Stock] PRIMARY KEY IDENTITY(1,1),
+	[ProductId] INT NOT NULL CONSTRAINT [FK_Stock_Product] FOREIGN KEY REFERENCES [dbo].[Product](Id),
+	[StoreId] INT NOT NULL CONSTRAINT [FK_Stock_Store] FOREIGN KEY REFERENCES [dbo].[Store](Id)
+)

@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[Category]
+(
+	[Id] INT NOT NULL CONSTRAINT [PK_Category] PRIMARY KEY IDENTITY(1,1),
+	[SubCategoryId] INT NULL CONSTRAINT [FK_SubCategory] FOREIGN KEY REFERENCES [dbo].[Category](Id),
+	[Name] NVARCHAR(250) NOT NULL CONSTRAINT [UK_CategoryName] UNIQUE,
+	[Description] NVARCHAR(500) NULL,
+	[Order] TINYINT NOT NULL,
+	[Active] BIT NOT NULL CONSTRAINT [DF_CategoryActive] DEFAULT (1)
+)
