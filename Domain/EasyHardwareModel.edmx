@@ -23,8 +23,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentCategoryId" Type="int" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Order" Type="tinyint" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
@@ -130,6 +132,18 @@
             </Principal>
             <Dependent Role="Address">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParentCategory">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Category1" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category1">
+              <PropertyRef Name="ParentCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -282,6 +296,10 @@
             <End Role="User" EntitySet="User" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
+          <AssociationSet Name="FK_ParentCategory" Association="Self.FK_ParentCategory">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Category1" EntitySet="Category" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProductCategory_Category" Association="Self.FK_ProductCategory_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="ProductCategory" EntitySet="ProductCategory" />
@@ -345,16 +363,6 @@
           <Property Name="PostalCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="UserAddress" Relationship="Self.FK_Address" FromRole="Address" ToRole="UserAddress" />
           <NavigationProperty Name="User" Relationship="Self.FK_AddressUser" FromRole="Address" ToRole="User" />
-        </EntityType>
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ProductCategory" Relationship="EasyHardwareModel.FK_ProductCategory_Category" FromRole="Category" ToRole="ProductCategory" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -583,7 +591,6 @@
         </Association>
         <EntityContainer Name="EasyHardwareEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Address" EntityType="Self.Address" />
-          <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Product" EntityType="Self.Product" />
           <EntitySet Name="Profile" EntityType="Self.Profile" />
           <EntitySet Name="Purchase" EntityType="Self.Purchase" />
@@ -634,15 +641,20 @@
             <End Role="UserAddress" EntitySet="UserAddress" />
           </AssociationSet>
           <EntitySet Name="ProductCategory" EntityType="EasyHardwareModel.ProductCategory" />
-          <AssociationSet Name="FK_ProductCategory_Category" Association="EasyHardwareModel.FK_ProductCategory_Category">
-            <End Role="Category" EntitySet="Category" />
-            <End Role="ProductCategory" EntitySet="ProductCategory" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProductCategory_Product" Association="EasyHardwareModel.FK_ProductCategory_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="ProductCategory" EntitySet="ProductCategory" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Category" EntityType="EasyHardwareModel.Category" />
+          <AssociationSet Name="FK_ParentCategory" Association="EasyHardwareModel.FK_ParentCategory">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Category1" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_Category" Association="EasyHardwareModel.FK_ProductCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="ProductCategory">
           <Key>
             <PropertyRef Name="Id" />
@@ -650,21 +662,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Category" Relationship="EasyHardwareModel.FK_ProductCategory_Category" FromRole="ProductCategory" ToRole="Category" />
           <NavigationProperty Name="Product" Relationship="EasyHardwareModel.FK_ProductCategory_Product" FromRole="ProductCategory" ToRole="Product" />
+          <NavigationProperty Name="Category" Relationship="EasyHardwareModel.FK_ProductCategory_Category" FromRole="ProductCategory" ToRole="Category" />
         </EntityType>
-        <Association Name="FK_ProductCategory_Category">
-          <End Type="EasyHardwareModel.Category" Role="Category" Multiplicity="1" />
-          <End Type="EasyHardwareModel.ProductCategory" Role="ProductCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProductCategory">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProductCategory_Product">
           <End Type="EasyHardwareModel.Product" Role="Product" Multiplicity="1" />
           <End Type="EasyHardwareModel.ProductCategory" Role="ProductCategory" Multiplicity="*" />
@@ -677,7 +677,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentCategoryId" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Order" Type="Byte" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="SubCategories" Relationship="EasyHardwareModel.FK_ParentCategory" FromRole="Category" ToRole="Category1" />
+          <NavigationProperty Name="ParentCategory" Relationship="EasyHardwareModel.FK_ParentCategory" FromRole="Category1" ToRole="Category" />
+          <NavigationProperty Name="ProductCategory" Relationship="EasyHardwareModel.FK_ProductCategory_Category" FromRole="Category" ToRole="ProductCategory" />
+        </EntityType>
+        <Association Name="FK_ParentCategory">
+          <End Type="EasyHardwareModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="EasyHardwareModel.Category" Role="Category1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category1">
+              <PropertyRef Name="ParentCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCategory_Category">
+          <End Type="EasyHardwareModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="EasyHardwareModel.ProductCategory" Role="ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -694,16 +732,6 @@
                 <ScalarProperty Name="Office" ColumnName="Office" />
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Category">
-            <EntityTypeMapping TypeName="EasyHardwareModel.Category">
-              <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -807,6 +835,18 @@
               <MappingFragment StoreEntitySet="ProductCategory">
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="EasyHardwareModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentCategoryId" ColumnName="ParentCategoryId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

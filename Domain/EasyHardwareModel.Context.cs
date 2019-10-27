@@ -26,7 +26,6 @@ namespace Domain
         }
     
         public virtual DbSet<Address> Address { get; set; }
-        public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Profile> Profile { get; set; }
         public virtual DbSet<Purchase> Purchase { get; set; }
@@ -37,5 +36,6 @@ namespace Domain
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserAddress> UserAddress { get; set; }
         public virtual DbSet<ProductCategory> ProductCategory { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
     }
 }

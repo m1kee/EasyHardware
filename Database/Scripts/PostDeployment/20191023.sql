@@ -13,7 +13,7 @@ INSERT INTO [dbo].[User] ([Name], [LastName], [UserName], [Password], [Email], [
 	VALUES ('Michael Joseph', 'Núñez Bobadilla', 'M1kee', '1445217533e7d4d0cffd9109c4edb60d62a02c0f0de9537be44f5e00d348eb4f', 'michael.nunezb@outlook.com', '+56944738082', @adminId);
 
 -- Categories
-INSERT INTO [dbo].[Category] ([Name], [SubCategoryId], [Description], [Order], [Active]) 
+INSERT INTO [dbo].[Category] ([Name], [ParentCategoryId], [Description], [Order], [Active]) 
 	VALUES 
 		('Componentes de PC', NULL, 'Aquí encontrarás todo lo que necesitas para armar, reparar o mejorar tu PC.', 1, 1),
 		('Computadores y Tablets', NULL, 'Los mejores PC gamer, Notebooks para trabajar y tablets las encuentras aquí.', 2, 1),
@@ -29,7 +29,7 @@ INSERT INTO [dbo].[Category] ([Name], [SubCategoryId], [Description], [Order], [
 -- Componentes de PC
 DECLARE @pcComponentsCategoryId INT;
 SELECT @pcComponentsCategoryId = [Id] FROM [dbo].[Category] WHERE [Name] = 'Componentes de PC';
-INSERT INTO [dbo].[Category] ([Name], [SubCategoryId], [Description], [Order], [Active]) 
+INSERT INTO [dbo].[Category] ([Name], [ParentCategoryId], [Description], [Order], [Active]) 
 	VALUES 
 		('Procesadores', @pcComponentsCategoryId, NULL, 1, 1),
 		('Placas Madre', @pcComponentsCategoryId, NULL, 2, 1),
@@ -45,7 +45,7 @@ INSERT INTO [dbo].[Category] ([Name], [SubCategoryId], [Description], [Order], [
 -- Computadores y Tablets
 DECLARE @notebooksAndTabletsCategoryId INT;
 SELECT @notebooksAndTabletsCategoryId = [Id] FROM [dbo].[Category] WHERE [Name] = 'Computadores y Tablets';
-INSERT INTO [dbo].[Category] ([Name], [SubCategoryId], [Description], [Order], [Active]) 
+INSERT INTO [dbo].[Category] ([Name], [ParentCategoryId], [Description], [Order], [Active]) 
 	VALUES 
 		('Notebooks', @notebooksAndTabletsCategoryId, NULL, 1, 1),
 		('Portables', @notebooksAndTabletsCategoryId, NULL, 2, 1),
