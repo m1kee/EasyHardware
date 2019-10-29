@@ -25,6 +25,11 @@ namespace Business.Services
             // get the attached category 
             return context.Category.SingleOrDefault(x => x.Id == categoryId);
         }
+        public Category Get(EasyHardwareEntities context, string categoryCode)
+        {
+            // get the attached category 
+            return context.Category.SingleOrDefault(x => x.Code == categoryCode);
+        }
         public Category Add(EasyHardwareEntities context, Category category)
         {
             // add category to context
@@ -43,7 +48,7 @@ namespace Business.Services
             dbCategory.Name = category.Name;
             dbCategory.Order = category.Order;
             dbCategory.ParentCategoryId = category.ParentCategoryId;
-            // save changes after soft delete
+            // save changes after edit
             context.SaveChanges();
             // return edited category
             return category;

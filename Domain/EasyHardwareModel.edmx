@@ -25,6 +25,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ParentCategoryId" Type="int" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="Order" Type="tinyint" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
@@ -37,6 +38,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="PartNumber" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -375,6 +377,7 @@
           <NavigationProperty Name="Stock" Relationship="Self.FK_ProductStock" FromRole="Product" ToRole="Stock" />
           <NavigationProperty Name="PurchaseDetail" Relationship="Self.FK_PurchaseProduct" FromRole="Product" ToRole="PurchaseDetail" />
           <NavigationProperty Name="ProductCategory" Relationship="EasyHardwareModel.FK_ProductCategory_Product" FromRole="Product" ToRole="ProductCategory" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Profile">
           <Key>
@@ -690,6 +693,7 @@
           <NavigationProperty Name="SubCategories" Relationship="EasyHardwareModel.FK_ParentCategory" FromRole="Category" ToRole="Category1" />
           <NavigationProperty Name="ParentCategory" Relationship="EasyHardwareModel.FK_ParentCategory" FromRole="Category1" ToRole="Category" />
           <NavigationProperty Name="ProductCategory" Relationship="EasyHardwareModel.FK_ProductCategory_Category" FromRole="Category" ToRole="ProductCategory" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_ParentCategory">
           <End Type="EasyHardwareModel.Category" Role="Category" Multiplicity="0..1" />
@@ -738,6 +742,7 @@
           <EntitySetMapping Name="Product">
             <EntityTypeMapping TypeName="EasyHardwareModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -842,6 +847,7 @@
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="EasyHardwareModel.Category">
               <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Order" ColumnName="Order" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

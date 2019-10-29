@@ -9,20 +9,15 @@ using System.Web.Http;
 
 namespace API.Controllers
 {
-    public class CategoryController : ApiController
+    public class ProductController : ApiController
     {
-        private readonly ICategoryService categoryService;
+        private readonly IProductService productService;
         private readonly EasyHardwareEntities context = new EasyHardwareEntities();
 
-        public CategoryController(ICategoryService categoryService)
-        {
-            this.categoryService = categoryService;
+        public ProductController(IProductService productService) {
+            this.productService = productService;
         }
 
-        /// <summary>
-        /// This method returns all categories
-        /// </summary>
-        /// <returns>List<Category></returns>
         [HttpGet]
         public IHttpActionResult Get()
         {
@@ -30,7 +25,7 @@ namespace API.Controllers
 
             try
             {
-                result = Ok(this.categoryService.Get(context));
+                result = Ok(this.productService.Get(context));
             }
             catch (Exception ex)
             {
@@ -39,21 +34,14 @@ namespace API.Controllers
 
             return result;
         }
-
-        /// <summary>
-        /// This method returns a specific category
-        /// </summary>
-        /// <param name="categoryId"></param>
-        /// <returns>Category</returns>
         [HttpGet]
-        [ActionName("GetById")]
-        public IHttpActionResult Get([FromUri(Name = "id")] int categoryId)
+        public IHttpActionResult Get([FromUri(Name = "id")] int productId)
         {
             IHttpActionResult result;
 
             try
             {
-                result = Ok(this.categoryService.Get(context, categoryId));
+                result = Ok(this.productService.Get(context, productId));
             }
             catch (Exception ex)
             {
@@ -62,39 +50,49 @@ namespace API.Controllers
 
             return result;
         }
-
-        /// <summary>
-        /// This method returns a specific category
-        /// </summary>
-        /// <param name="categoryCode"></param>
-        /// <returns>Category</returns>
-        [HttpGet]
-        [ActionName("GetByCode")]
-        public IHttpActionResult Get([FromUri(Name = "id")] string categoryCode)
-        {
-            IHttpActionResult result;
-
-            try
-            {
-                result = Ok(this.categoryService.Get(context, categoryCode));
-            }
-            catch (Exception ex)
-            {
-                result = BadRequest(ex.Message);
-            }
-
-            return result;
-        }
-
         [HttpPost]
-        public IHttpActionResult Post([FromBody]Category category)
+        public IHttpActionResult Post([FromBody]Product product)
         {
             IHttpActionResult result;
 
             try
             {
                 // TODO: validate things
-                result = Ok(this.categoryService.Add(context, category));
+                result = Ok(this.productService.Add(context, product));
+            }
+            catch (Exception ex)
+            {
+                result = BadRequest(ex.Message);
+            }
+
+            return result;
+        }
+        [HttpPut]
+        public IHttpActionResult Put([FromUri(Name = "id")] int productId, [FromBody]Product product)
+        {
+            IHttpActionResult result;
+
+            try
+            {
+                // TODO: validate things
+                result = Ok(this.productService.Edit(context, productId, product));
+            }
+            catch (Exception ex)
+            {
+                result = BadRequest(ex.Message);
+            }
+
+            return result;
+        }
+        [HttpDelete]
+        public IHttpActionResult Delete([FromUri(Name = "id")] int productId)
+        {
+            IHttpActionResult result;
+
+            try
+            {
+                // TODO: validate things
+                result = Ok(this.productService.Delete(context, productId));
             }
             catch (Exception ex)
             {

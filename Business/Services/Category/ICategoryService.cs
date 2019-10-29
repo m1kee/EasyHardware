@@ -11,6 +11,7 @@ namespace Business.Services
     {
         IList<Category> Get(EasyHardwareEntities context);
         Category Get(EasyHardwareEntities context, int category);
+        Category Get(EasyHardwareEntities context, string categoryCode);
         Category Add(EasyHardwareEntities context, Category category);
         Category Edit(EasyHardwareEntities context, int categoryId, Category category);
         Category Delete(EasyHardwareEntities context, int categoryId);
