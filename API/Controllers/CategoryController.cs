@@ -24,13 +24,14 @@ namespace API.Controllers
         /// </summary>
         /// <returns>List<Category></returns>
         [HttpGet]
-        public IHttpActionResult Get()
+        [ActionName("GetAll")]
+        public IHttpActionResult Get([FromUri(Name = "id")] bool onlyUnparent)
         {
             IHttpActionResult result;
 
             try
             {
-                result = Ok(this.categoryService.Get(context));
+                result = Ok(this.categoryService.Get(context, onlyUnparent));
             }
             catch (Exception ex)
             {
@@ -95,6 +96,42 @@ namespace API.Controllers
             {
                 // TODO: validate things
                 result = Ok(this.categoryService.Add(context, category));
+            }
+            catch (Exception ex)
+            {
+                result = BadRequest(ex.Message);
+            }
+
+            return result;
+        }
+
+        [HttpPut]
+        public IHttpActionResult Put([FromUri(Name = "id")] int categoryId, [FromBody]Category category)
+        {
+            IHttpActionResult result;
+
+            try
+            {
+                // TODO: validate things
+                result = Ok(this.categoryService.Edit(context, categoryId, category));
+            }
+            catch (Exception ex)
+            {
+                result = BadRequest(ex.Message);
+            }
+
+            return result;
+        }
+
+        [HttpDelete]
+        public IHttpActionResult Delete([FromUri(Name = "id")] int categoryId)
+        {
+            IHttpActionResult result;
+
+            try
+            {
+                // TODO: validate things
+                result = Ok(this.categoryService.Delete(context, categoryId));
             }
             catch (Exception ex)
             {

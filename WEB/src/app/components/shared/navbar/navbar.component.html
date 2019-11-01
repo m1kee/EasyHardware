@@ -54,29 +54,29 @@
         Michael Núñez
       </a>
       <div id="dropdown-animated" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-animated">
-        <a class="dropdown-item" [routerLink]="['/maintenance/my-account']" routerLinkActive="active">
+        <a class="dropdown-item clickable" [routerLink]="['/maintenance/my-account']" routerLinkActive="active">
           <fa-icon [icon]="icons.faUserCircle" [fixedWidth]="true"></fa-icon>&nbsp;
           Mi cuenta
         </a>
-        <a class="dropdown-item" (click)="logout()">
+        <a class="dropdown-item clickable" (click)="logout()">
           <fa-icon [icon]="icons.faSignOutAlt" [fixedWidth]="true"></fa-icon>&nbsp;
-          Cerrar sesión
+          Salir
         </a>
         <div class="dropdown-divider"></div>
         <h6 class="dropdown-header">Mantenedores</h6>
-        <a class="dropdown-item" [routerLink]="['/maintenance/category']" routerLinkActive="active">
+        <a class="dropdown-item clickable" [routerLink]="['/maintenance/category']" routerLinkActive="active">
           <fa-icon [icon]="icons.faList" [fixedWidth]="true"></fa-icon>&nbsp;
           Categorías
         </a>
-        <a class="dropdown-item" [routerLink]="['/maintenance/product']" routerLinkActive="active">
+        <a class="dropdown-item clickable" [routerLink]="['/maintenance/product']" routerLinkActive="active">
           <fa-icon [icon]="icons.faBoxOpen" [fixedWidth]="true"></fa-icon>&nbsp;
           Productos
         </a>
-        <a class="dropdown-item" [routerLink]="['/maintenance/store']" routerLinkActive="active">
+        <a class="dropdown-item clickable" [routerLink]="['/maintenance/store']" routerLinkActive="active">
           <fa-icon [icon]="icons.faStore" [fixedWidth]="true"></fa-icon>&nbsp;
           Tiendas
         </a>
-        <a class="dropdown-item" [routerLink]="['/maintenance/stock']" routerLinkActive="active">
+        <a class="dropdown-item clickable" [routerLink]="['/maintenance/stock']" routerLinkActive="active">
           <fa-icon [icon]="icons.faBoxes" [fixedWidth]="true"></fa-icon>&nbsp;
           Stock
         </a>

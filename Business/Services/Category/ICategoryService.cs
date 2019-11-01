@@ -9,7 +9,7 @@ namespace Business.Services
 {
     public interface ICategoryService
     {
-        IList<Category> Get(EasyHardwareEntities context);
+        IList<Category> Get(EasyHardwareEntities context, bool onlyUnparent);
         Category Get(EasyHardwareEntities context, int category);
         Category Get(EasyHardwareEntities context, string categoryCode);
         Category Add(EasyHardwareEntities context, Category category);

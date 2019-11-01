@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../../categories/category.service';
+import { CategoryService } from '../../../services/category.service';
 import { faShoppingCart, faAngleDown, faSignOutAlt, faUserCircle, faList, faBoxOpen, faStore, faBoxes } from '@fortawesome/free-solid-svg-icons';
 import { LocalStorageService } from '../../../services/local-storage.service';
 
@@ -45,7 +45,7 @@ export class NavbarComponent implements OnInit {
             this.categories = cachedCategories;
         } else {
             // go to API
-            this.categoryService.getAll().subscribe((categories: any[]) => {
+            this.categoryService.getAll(true).subscribe((categories: any[]) => {
                 console.log('categories: ', categories);
                 this.categories = categories;
                 this.localStorageService.set(this.categoryService.storageKey, categories);

@@ -14,9 +14,9 @@ namespace Business.Services
         /// </summary>
         /// <param name="context"></param>
         /// <returns>List of categories</returns>
-        public IList<Category> Get(EasyHardwareEntities context)
+        public IList<Category> Get(EasyHardwareEntities context, bool onlyUnparent)
         {
-            return context.Category.Where(x => x.Active && x.ParentCategoryId == null)
+            return context.Category.Where(x => x.Active && (!onlyUnparent || (onlyUnparent && x.ParentCategoryId == null)))
                                    .OrderBy(x => x.Order)
                                    .ToList();
         }
@@ -32,6 +32,11 @@ namespace Business.Services
         }
         public Category Add(EasyHardwareEntities context, Category category)
         {
+            // relating to the assigned parent category
+            if (category.ParentCategoryId > 0)
+            {
+                category.ParentCategory = context.Category.Single(x => x.Id == category.ParentCategoryId);
+            }
             // add category to context
             context.Category.Add(category);
             // save changes

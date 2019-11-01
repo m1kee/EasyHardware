@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -10,8 +10,8 @@ export class CategoryService {
     public storageKey: string = 'categories';
     constructor(private httpClient: HttpClient) { }
 
-    getAll() {
-        return this.httpClient.get(`${this.env.apiUrl}/Category`);
+    getAll(onlyUnparent: boolean) {
+        return this.httpClient.get(`${this.env.apiUrl}/Category/GetAll/${onlyUnparent}`);
     }
 
     getById(id: number) {

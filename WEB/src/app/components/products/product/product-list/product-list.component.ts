@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../../product.service';
+import { ProductService } from '../../../../services/product.service';
 import { ActivatedRoute } from '@angular/router';
-import { CategoryService } from '../../../categories/category.service';
+import { CategoryService } from '../../../../services/category.service';
 
 @Component({
   selector: 'app-product-list',
@@ -18,18 +18,13 @@ export class ProductListComponent implements OnInit {
         this.activatedRoute.paramMap.subscribe((paramsMap: any) => {
             if (paramsMap.params.categoryCode) {
                 this.categoryService.getByCode(paramsMap.params.categoryCode).subscribe((category) => {
-                    console.log('category: ', category.Name);
                     this.category = category;
-
                     this.getProducts(this.category.Code);
                 });
             } else {
                 this.getProducts(null);
             }
-        });
-
-        // getting products
-        
+        });        
     };
 
     getProducts(category: string) {
