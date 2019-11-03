@@ -15,6 +15,7 @@ namespace API
             // it is NOT necessary to register your controllers
             container.RegisterType<ICategoryService, CategoryService>();
             container.RegisterType<IProductService, ProductService>();
+            container.RegisterType<IStoreService, StoreService>();
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

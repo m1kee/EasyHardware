@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
-import { ShoppingCartItem } from '../domain/shopping-cart-item';
+import { ShoppingCartItem } from '@domain/shopping-cart-item';
 
 @Injectable({
   providedIn: 'root'

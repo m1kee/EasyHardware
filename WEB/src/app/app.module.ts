@@ -12,26 +12,32 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 /* Routing */
-import { APP_ROUTING } from './app.routing';
+import { APP_ROUTING } from '@app/app.routing';
 /* Main Component */
-import { AppComponent } from './app.component';
+import { AppComponent } from '@app/app.component';
 /* Categories */
-import { CategoryService } from './services/category.service';
+import { CategoryCrudComponent } from '@components/maintenance/category-crud/category-crud.component';
+import { CategoryService } from '@services/category.service';
 /* Products */
-import { ProductListComponent } from './components/products/product/product-list/product-list.component';
-import { ProductDetailComponent } from './components/products/product/product-detail/product-detail.component';
-import { ProductService } from './services/product.service';
-/* Shared */
-import { PageNotFoundComponent } from './components/shared/page-not-found/page-not-found.component';
-import { WorkInProgressComponent } from './components/shared/work-in-progress/work-in-progress.component';
-import { NavbarComponent } from './components/shared/navbar/navbar.component';
-import { LoginComponent } from './components/shared/login/login.component';
-import { RegisterComponent } from './components/shared/register/register.component';
-import { ForgotPasswordComponent } from './components/shared/forgot-password/forgot-password.component';
-/* Services */
-import { LocalStorageService } from './services/local-storage.service';
-import { CategoryCrudComponent } from './components/maintenance/category-crud/category-crud.component';
-import { ProductCrudComponent } from './components/maintenance/product-crud/product-crud.component';
+import { ProductCrudComponent } from '@components/maintenance/product-crud/product-crud.component';
+import { ProductListComponent } from '@components/products/product/product-list/product-list.component';
+import { ProductDetailComponent } from '@components/products/product/product-detail/product-detail.component';
+import { ProductService } from '@services/product.service';
+/* Stores */
+import { StoreCrudComponent } from '@components/maintenance/store-crud/store-crud.component';
+import { StoreService } from '@services/store.service';
+/* Shopping Cart */
+import { ShoppingCartComponent } from '@components/shared/shopping-cart/shopping-cart.component';
+import { ShoppingCartService } from '@services/shopping-cart.service';
+/* Shared Components */
+import { PageNotFoundComponent } from '@components/shared/page-not-found/page-not-found.component';
+import { WorkInProgressComponent } from '@components/shared/work-in-progress/work-in-progress.component';
+import { NavbarComponent } from '@components/shared/navbar/navbar.component';
+import { LoginComponent } from '@components/shared/login/login.component';
+import { RegisterComponent } from '@components/shared/register/register.component';
+import { ForgotPasswordComponent } from '@components/shared/forgot-password/forgot-password.component';
+/* Shared Services */
+import { LocalStorageService } from '@services/local-storage.service';
 
 
 
@@ -48,7 +54,9 @@ import { ProductCrudComponent } from './components/maintenance/product-crud/prod
         RegisterComponent,
         ForgotPasswordComponent,
         CategoryCrudComponent,
-        ProductCrudComponent
+        ProductCrudComponent,
+        StoreCrudComponent,
+        ShoppingCartComponent
     ],
     imports: [
         BrowserModule,
@@ -85,7 +93,13 @@ import { ProductCrudComponent } from './components/maintenance/product-crud/prod
             confirmButtonColor: '#dc3545'
         }),
     ],
-    providers: [CategoryService, ProductService, LocalStorageService],
+    providers: [
+        CategoryService,
+        ProductService,
+        StoreService,
+        ShoppingCartService,
+        LocalStorageService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

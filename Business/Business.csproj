@@ -58,6 +58,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Product\IProductService.cs" />
     <Compile Include="Services\Product\ProductService.cs" />
+    <Compile Include="Services\Store\IStoreService.cs" />
+    <Compile Include="Services\Store\StoreService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

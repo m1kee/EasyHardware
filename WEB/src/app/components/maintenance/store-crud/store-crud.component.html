@@ -1,50 +1,65 @@
 <div class="row m-3">
   <div class="col-xs-12 col-lg-6 col-xl-6">
-    <!-- category crud -->
     <h1>
-      Categor&iacute;a: {{ currentCategory.Name }}
+      Sucursal: {{ currentStore.Name }}
     </h1>
     <hr />
-    <form novalidate="" (ngSubmit)="save(categoryForm)" #categoryForm="ngForm" class="was-validated">
+    <form novalidate=""
+          (ngSubmit)="save(storeForm)"
+          #storeForm="ngForm"
+          class="was-validated">
       <div class="row">
         <!-- Name -->
         <div class="col-xl-6 col-lg-12 col-md-6 col-sm-6 col-xs-12">
           <div class="form-group" [ngClass]="{'has-danger': name.errors?.required && name.touched }">
-            <label for="category-name">Nombre:</label>
+            <label for="store-name">Nombre:</label>
             <input name="name"
                    #name="ngModel"
-                   [(ngModel)]="currentCategory.Name"
+                   [(ngModel)]="currentStore.Name"
                    required
                    type="text"
                    class="form-control"
-                   id="category-name"
-                   placeholder="Ingresa el nombre de la categoría">
+                   id="store-name"
+                   placeholder="Ingresa el nombre de la tienda">
           </div>
         </div>
         <!-- Description -->
         <div class="col-xl-6 col-lg-12 col-md-6 col-sm-6 col-xs-12">
           <div class="form-group" [ngClass]="{'has-danger': desc.errors?.required && desc.touched }">
-            <label for="category-desc">Descripci&oacute;n:</label>
+            <label for="store-desc">Descripci&oacute;n:</label>
             <input name="desc"
                    #desc="ngModel"
-                   [(ngModel)]="currentCategory.Description"
+                   [(ngModel)]="currentStore.Description"
                    type="text"
                    class="form-control"
-                   id="category-desc"
-                   placeholder="Ingresa una pequeña descripción">
+                   id="store-desc"
+                   placeholder="Ingresa una pequeña descripci&oacute;n">
+          </div>
+        </div>
+        <!-- Location -->
+        <div class="col-xl-6 col-lg-12 col-md-6 col-sm-6 col-xs-12">
+          <div class="form-group" [ngClass]="{'has-danger': location.errors?.required && location.touched }">
+            <label for="store-location">Direcci&oacute;n:</label>
+            <input name="location"
+                   #location="ngModel"
+                   [(ngModel)]="currentStore.Location"
+                   type="text"
+                   class="form-control"
+                   id="store-location"
+                   placeholder="Ingresa la direcci&oacute;n">
           </div>
         </div>
         <!-- Code -->
         <div class="col-xl-6 col-lg-12 col-md-6 col-sm-6 col-xs-12">
           <div class="form-group" [ngClass]="{'has-danger': (code.errors?.required || code.errors?.pattern) && code.touched }">
-            <label for="category-code">C&oacute;digo:</label>
+            <label for="store-code">C&oacute;digo:</label>
             <input name="code"
                    #code="ngModel"
-                   [(ngModel)]="currentCategory.Code"
+                   [(ngModel)]="currentStore.Code"
                    required
                    type="text"
                    class="form-control"
-                   id="category-code"
+                   id="store-code"
                    aria-describedby="code-help"
                    placeholder="Ingresa un código único"
                    pattern="^[a-z\-]+">
@@ -53,21 +68,10 @@
             <small id="code-help" class="form-text text-muted">S&oacute;lo min&uacute;sculas.</small>
           </div>
         </div>
-        <div class="col-xl-6 col-lg-12 col-md-6 col-sm-6 col-xs-12">
-          <div class="form-group">
-            <label for="category-parent">Categor&iacute;a Padre:</label>
-            <ng-multiselect-dropdown [placeholder]="'Seleccione una categoría padre'"
-                                     [data]="unparentCategories"
-                                     name="parent-category"
-                                     [(ngModel)]="currentCategory.ParentCategoryId"
-                                     [settings]="dropdownSettings">
-            </ng-multiselect-dropdown>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <button name="save-btn" type="submit" class="btn btn-success" style="margin-right: 5px;" [disabled]="!categoryForm.valid || loading">
+          <button name="save-btn" type="submit" class="btn btn-success" style="margin-right: 5px;" [disabled]="!storeForm.valid || loading">
             <fa-icon [icon]="icons.faSave" [fixedWidth]="true"></fa-icon>&nbsp;
             Guardar
           </button>
@@ -80,31 +84,33 @@
     </form>
   </div>
   <div class="col-xs-12 col-lg-6 col-xl-6">
-    <h1> Categor&iacute;as</h1>
+    <h1>
+      Sucursales
+    </h1>
     <hr />
-    <!-- category list -->
+    <!-- store list -->
     <table class="table table-hover table-sm">
       <thead class="thead-light">
         <tr>
           <th scope="col">Nombre</th>
           <th scope="col">C&oacute;digo</th>
+          <th scope="col">Direcci&oacute;n</th>
           <th scope="col">Activa</th>
-          <th scope="col">C. Padre</th>
           <th scope="col">Acciones </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let category of categories | paginate: paginationConfig">
-          <td>{{ category.Name }}</td>
-          <td>{{ category.Code }}</td>
-          <td>{{ category.Active }}</td>
-          <td>{{ category.ParentCategory ? category.ParentCategory.Name : '' }}</td>
+        <tr *ngFor="let store of stores | paginate: paginationConfig">
+          <td>{{ store.Name }}</td>
+          <td>{{ store.Code }}</td>
+          <td>{{ store.Location }}</td>
+          <td>{{ store.Active }}</td>
           <td>
-            <button (click)="edit(category)" type="button" class="btn btn-sm btn-default" style="margin-right: 5px;">
+            <button (click)="edit(store)" type="button" class="btn btn-sm btn-default" style="margin-right: 5px;">
               <fa-icon [icon]="icons.faEdit" [fixedWidth]="true"></fa-icon>
             </button>
             <button [swal]="['Advertencia!', '¿Está seguro de querer eliminar este elemento?', 'warning']"
-                    (confirm)="delete(category)"
+                    (confirm)="delete(store)"
                     type="button" class="btn btn-default btn-sm">
               <fa-icon [icon]="icons.faTrashAlt" [fixedWidth]="true"></fa-icon>
             </button>
@@ -113,7 +119,7 @@
       </tbody>
     </table>
     <div id="pagination" class="text-center">
-      <pagination-controls (pageChange)="categoryPageChanged($event)"
+      <pagination-controls (pageChange)="pageChanged($event)"
                            previousLabel="Atrás"
                            nextLabel="Siguiente"
                            autoHide="true"

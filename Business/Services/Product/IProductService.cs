@@ -9,10 +9,11 @@ namespace Business.Services
 {
     public interface IProductService
     {
-        IList<Domain.Product> Get(EasyHardwareEntities context);
-        Domain.Product Get(EasyHardwareEntities context, int productId);
-        Domain.Product Add(EasyHardwareEntities context, Domain.Product product);
-        Domain.Product Edit(EasyHardwareEntities context, int productId, Domain.Product product);
-        Domain.Product Delete(EasyHardwareEntities context, int productId);
+        IList<Product> Get(EasyHardwareEntities context);
+        Product Get(EasyHardwareEntities context, int productId);
+        Product Get(EasyHardwareEntities context, string productPartNumber);
+        Product Add(EasyHardwareEntities context, Product product);
+        Product Edit(EasyHardwareEntities context, int productId, Product product);
+        Product Delete(EasyHardwareEntities context, int productId);
     }
 }

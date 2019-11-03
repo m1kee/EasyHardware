@@ -9,14 +9,15 @@ using System.Web.Http;
 
 namespace API.Controllers
 {
-    [RoutePrefix("api/Product")]
-    public class ProductController : ApiController
+    [RoutePrefix("api/Store")]
+    public class StoreController : ApiController
     {
-        private readonly IProductService productService;
+        private readonly IStoreService storeService;
         private readonly EasyHardwareEntities context = new EasyHardwareEntities();
 
-        public ProductController(IProductService productService) {
-            this.productService = productService;
+        public StoreController(IStoreService storeService)
+        {
+            this.storeService = storeService;
         }
 
         [HttpGet]
@@ -28,7 +29,7 @@ namespace API.Controllers
 
             try
             {
-                result = Ok(this.productService.Get(context));
+                result = Ok(this.storeService.Get(context));
             }
             catch (Exception ex)
             {
@@ -40,13 +41,13 @@ namespace API.Controllers
         [HttpGet]
         [ActionName("GetById")]
         [Route("GetById/{id:int}")]
-        public IHttpActionResult Get([FromUri(Name = "id")] int productId)
+        public IHttpActionResult Get([FromUri(Name = "id")] int storeId)
         {
             IHttpActionResult result;
 
             try
             {
-                result = Ok(this.productService.Get(context, productId));
+                result = Ok(this.storeService.Get(context, storeId));
             }
             catch (Exception ex)
             {
@@ -55,16 +56,21 @@ namespace API.Controllers
 
             return result;
         }
+        /// <summary>
+        /// This method returns a specific store
+        /// </summary>
+        /// <param name="storeCode"></param>
+        /// <returns>Store</returns>
         [HttpGet]
         [ActionName("GetByCode")]
         [Route("GetByCode/{id}")]
-        public IHttpActionResult Get([FromUri(Name = "id")] string productPartNumber)
+        public IHttpActionResult Get([FromUri(Name = "id")] string storeCode)
         {
             IHttpActionResult result;
 
             try
             {
-                result = Ok(this.productService.Get(context, productPartNumber));
+                result = Ok(this.storeService.Get(context, storeCode));
             }
             catch (Exception ex)
             {
@@ -74,15 +80,14 @@ namespace API.Controllers
             return result;
         }
         [HttpPost]
-        [ActionName("")]
-        public IHttpActionResult Post([FromBody]Product product)
+        public IHttpActionResult Post([FromBody]Store store)
         {
             IHttpActionResult result;
 
             try
             {
                 // TODO: validate things
-                result = Ok(this.productService.Add(context, product));
+                result = Ok(this.storeService.Add(context, store));
             }
             catch (Exception ex)
             {
@@ -92,15 +97,14 @@ namespace API.Controllers
             return result;
         }
         [HttpPut]
-        [ActionName("")]
-        public IHttpActionResult Put([FromUri(Name = "id")] int productId, [FromBody]Product product)
+        public IHttpActionResult Put([FromUri(Name = "id")] int storeId, [FromBody]Store store)
         {
             IHttpActionResult result;
 
             try
             {
                 // TODO: validate things
-                result = Ok(this.productService.Edit(context, productId, product));
+                result = Ok(this.storeService.Edit(context, storeId, store));
             }
             catch (Exception ex)
             {
@@ -110,15 +114,14 @@ namespace API.Controllers
             return result;
         }
         [HttpDelete]
-        [ActionName("")]
-        public IHttpActionResult Delete([FromUri(Name = "id")] int productId)
+        public IHttpActionResult Delete([FromUri(Name = "id")] int storeId)
         {
             IHttpActionResult result;
 
             try
             {
                 // TODO: validate things
-                result = Ok(this.productService.Delete(context, productId));
+                result = Ok(this.storeService.Delete(context, storeId));
             }
             catch (Exception ex)
             {

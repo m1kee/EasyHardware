@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../../../services/category.service';
+import { CategoryService } from '@services/category.service';
 import { faShoppingCart, faAngleDown, faSignOutAlt, faUserCircle, faList, faBoxOpen, faStore, faBoxes } from '@fortawesome/free-solid-svg-icons';
-import { LocalStorageService } from '../../../services/local-storage.service';
+import { LocalStorageService } from '@services/local-storage.service';
+import { ICategory } from '@domain/category';
 
 @Component({
   selector: 'app-navbar',
@@ -30,7 +31,6 @@ export class NavbarComponent implements OnInit {
         isCollapsed: true
     };
 
-
     ngOnInit() {
         // TODO: get shopping cart items from localstorage
         this.shoppingCart.items.push('Notebook Gamer');
@@ -38,22 +38,13 @@ export class NavbarComponent implements OnInit {
         this.shoppingCart.items.push('SSD 512 GB');
         this.shoppingCart.items.push('NVIDIA 2080TI');
 
-        // try get cached categories 
-        let cachedCategories = this.localStorageService.get(this.categoryService.storageKey);
-        if (cachedCategories) {
-            console.log('cached categories: ', cachedCategories);
-            this.categories = cachedCategories;
-        } else {
-            // go to API
-            this.categoryService.getAll(true).subscribe((categories: any[]) => {
-                console.log('categories: ', categories);
-                this.categories = categories;
-                this.localStorageService.set(this.categoryService.storageKey, categories);
-            });
-        }
+        this.categoryService.getAll(true).subscribe((categories: ICategory[]) => {
+            console.log('categories: ', categories);
+            this.categories = categories;
+        });
     }
 
     logout() {
-        console.log('bye motherfucker');
+        console.log('you\'re successfully logout');
     }
 }
