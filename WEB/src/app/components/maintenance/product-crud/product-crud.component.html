@@ -23,19 +23,6 @@
                    placeholder="Ingresa el nombre del producto">
           </div>
         </div>
-        <!-- Description -->
-        <div class="col-xl-6 col-lg-12 col-md-6 col-sm-6 col-xs-12">
-          <div class="form-group" [ngClass]="{'has-danger': desc.errors?.required && desc.touched }">
-            <label for="product-desc">Descripci&oacute;n:</label>
-            <input name="desc"
-                   #desc="ngModel"
-                   [(ngModel)]="currentProduct.Description"
-                   type="text"
-                   class="form-control"
-                   id="product-desc"
-                   placeholder="Ingresa una pequeña descripci&oacute;n">
-          </div>
-        </div>
         <!-- Price -->
         <div class="col-xl-6 col-lg-12 col-md-6 col-sm-6 col-xs-12">
           <div class="form-group" [ngClass]="{'has-danger': (price.errors?.required || price.errors?.min) && price.touched }">
@@ -68,6 +55,33 @@
             <small id="code-help" class="form-text text-muted">No puede contener espacios (reemplazar por gui&oacute;n medio).</small>
             <small id="code-help" class="form-text text-muted">No puede contener caracteres especiales.</small>
             <small id="code-help" class="form-text text-muted">S&oacute;lo min&uacute;sculas.</small>
+          </div>
+        </div>
+        <!-- Categories -->
+        <div class="col-xl-6 col-lg-12 col-md-6 col-sm-6 col-xs-12">
+          <div class="form-group">
+            <label for="product-categories">Categor&iacute;as:</label>
+            <ng-multiselect-dropdown [placeholder]="'Seleccione una o más categorías'"
+                                     [data]="categories"
+                                     name="product-categories"
+                                     [(ngModel)]="currentProduct.Categories"
+                                     [settings]="dropdownSettings">
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+        <!-- Description -->
+        <div class="col-xl-6 col-lg-12 col-md-6 col-sm-6 col-xs-12">
+          <div class="form-group" [ngClass]="{'has-danger': desc.errors?.required && desc.touched }">
+            <label for="product-desc">Descripci&oacute;n:</label>
+            <textarea name="desc"
+                      #desc="ngModel"
+                      [(ngModel)]="currentProduct.Description"
+                      type="text"
+                      class="form-control"
+                      id="product-desc"
+                      rows="4"
+                      placeholder="Ingresa una pequeña descripci&oacute;n">
+            </textarea>
           </div>
         </div>
       </div>

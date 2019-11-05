@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CategoryCrudComponent implements OnInit {
 
     unparentCategories: any = [];
-    categories: any = [];
+    categories: ICategory[] = [];
     currentCategory: ICategory = this.defaultCategory();
     dropdownSettings: IDropdownSettings = {
         singleSelection: true,
@@ -32,11 +32,14 @@ export class CategoryCrudComponent implements OnInit {
     paginationConfig: any = {
         itemsPerPage: 10,
         currentPage: 1,
-        totalItems: this.categories.count
+        totalItems: this.categories.length
     };
     loading: boolean = false;
 
-    constructor(private categoryService: CategoryService, private toastrService: ToastrService) { };
+    constructor(
+        private categoryService: CategoryService,
+        private toastrService: ToastrService
+    ) { };
 
     ngOnInit() {
         this.getCategories();
@@ -109,6 +112,7 @@ export class CategoryCrudComponent implements OnInit {
             Active: true,
             Description: null,
             Id: null,
+            Code: null,
             Name: null,
             Order: 1,
             ParentCategoryId: null,

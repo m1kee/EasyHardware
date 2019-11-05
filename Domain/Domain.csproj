@@ -77,9 +77,6 @@
     <Compile Include="Product.cs">
       <DependentUpon>EasyHardwareModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProductCategory.cs">
-      <DependentUpon>EasyHardwareModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Profile.cs">
       <DependentUpon>EasyHardwareModel.tt</DependentUpon>
     </Compile>

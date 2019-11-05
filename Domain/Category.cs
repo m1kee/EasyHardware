@@ -18,7 +18,7 @@ namespace Domain
         public Category()
         {
             this.SubCategories = new HashSet<Category>();
-            this.ProductCategory = new HashSet<ProductCategory>();
+            this.Products = new HashSet<Product>();
         }
     
         public int Id { get; set; }
@@ -33,6 +33,6 @@ namespace Domain
         public virtual ICollection<Category> SubCategories { get; set; }
         public virtual Category ParentCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductCategory> ProductCategory { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
   <button class="navbar-toggler"
           type="button"
           (click)="menuBehavior.isCollapsed = !menuBehavior.isCollapsed"
@@ -36,14 +36,92 @@
   </div>
 
   <form id="user-menu" class="form-inline">
-    <button class="btn btn-success my-2 my-sm-0" type="button">
-      <fa-icon [icon]="icons.faShoppingCart"></fa-icon>&nbsp;
-      <span class="badge badge-light"
-            style="margin-left: 5px;"
-            *ngIf="shoppingCart.items && shoppingCart.items.length > 0">
-        {{ shoppingCart.items.length }}
-      </span>
-    </button>
+    <div class="btn-group" dropdown [autoClose]="false">
+      <button class="btn btn-primary" type="button" dropdownToggle id="cart-button" aria-controls="shopping-cart-dropdown" style="border-radius: .25rem !important;">
+        <fa-icon [icon]="icons.faShoppingCart"></fa-icon>&nbsp;
+        <span class="badge badge-light"
+              style="margin-left: 5px;">
+          {{ getCartItems().length }}
+        </span>
+      </button>
+
+      <div id="shopping-cart-dropdown" *dropdownMenu class="dropdown-menu dropdown-menu-right " role="menu" aria-labelledby="cart-button">
+        <div class="cart-item pt-0 pb-0">
+          <div class="row cart-title pb-2">
+            <div class="col-12">
+              <small>
+                <b class="text-primary">
+                  Carro de compras
+                </b>
+              </small>
+              <button (click)="clearShoppingCart()" type="button" class="btn btn-xs btn-outline-danger float-right" title="Vaciar carro de compras">
+                <fa-icon [icon]="icons.faBroom"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="scrollable">
+          <div class="cart-item text-center" *ngIf="getCartItems().length === 0">
+            <small class="text-muted">
+              A&uacute;n no hay items en el carrito <fa-icon [icon]="icons.faFrown"></fa-icon>
+            </small>
+          </div>
+          <div *ngFor="let cartItem of getCartItems(); let last = last">
+            <div class="cart-item">
+              <div class="row">
+                <div class="col-1 pr-0">
+                  <small>
+                    <b>
+                      {{ cartItem.Count }} x
+                    </b>
+                  </small>
+                </div>
+                <div class="col-8">
+                  <div class="media">
+                    <img src="https://broxtechnology.com/images/iconos/box.png" style="width: 64px; height: auto;" alt="product" class="img-fluid" />
+                    <div class="media-body text-wrap">
+                      <span>
+                        <small>
+                          <b>
+                            {{ cartItem.Item.Name }}
+                          </b>
+                        </small>
+                      </span>
+                      <br />
+                      <small>
+                        {{ cartItem.Item.Description }}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3 text-right">
+                  <b class="text-primary"> {{ cartItem.Item.Price | currency:'CLP':'C/U $' }} </b>
+                </div>
+              </div>
+            </div>
+            <div class="dropdown-divider" *ngIf="!last"></div>
+          </div>
+        </div>
+        <div class="cart-item">
+          <div class="row cart-footer">
+            <div class="col-4">
+              <button type="button" class="btn btn-success btn-block">
+                <fa-icon [icon]="icons.faCreditCard"></fa-icon>&nbsp;
+                Pagar
+              </button>
+            </div>
+            <div class="col-8 text-right">
+              <small>
+                <b>
+                  TOTAL: <span class="text-primary">{{ getCartTotal() | currency:'CLP':'$' }}</span>
+                </b>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="btn-group" dropdown style="margin-left: 5px;">
       <a class="nav-link dropdown-toggle clickable text-white"
@@ -53,7 +131,7 @@
          aria-controls="dropdown-animated">
         Michael Núñez
       </a>
-      <div id="dropdown-animated" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-animated">
+      <div id="dropdown-animated" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item clickable" [routerLink]="['/maintenance/my-account']" routerLinkActive="active">
           <fa-icon [icon]="icons.faUserCircle" [fixedWidth]="true"></fa-icon>&nbsp;
           Mi cuenta

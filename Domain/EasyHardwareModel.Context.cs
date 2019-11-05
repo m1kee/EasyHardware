@@ -35,7 +35,6 @@ namespace Domain
         public virtual DbSet<Store> Store { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserAddress> UserAddress { get; set; }
-        public virtual DbSet<ProductCategory> ProductCategory { get; set; }
         public virtual DbSet<Category> Category { get; set; }
     }
 }

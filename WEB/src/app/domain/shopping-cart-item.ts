@@ -1,5 +1,7 @@
+import { IProduct } from './product';
+
 export class ShoppingCartItem {
-    Item: any;
+    Item: IProduct;
     Count: number;
     Id: any;
 }

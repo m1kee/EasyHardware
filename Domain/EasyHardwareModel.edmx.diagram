@@ -25,11 +25,9 @@
         <AssociationConnector Association="EasyHardwareModel.FK_PurchaseState" ManuallyRouted="false" />
         <AssociationConnector Association="EasyHardwareModel.FK_ProductStore" ManuallyRouted="false" />
         <AssociationConnector Association="EasyHardwareModel.FK_User" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="EasyHardwareModel.ProductCategory" Width="1.5" PointX="3" PointY="9.125" />
-        <AssociationConnector Association="EasyHardwareModel.FK_ProductCategory_Product" />
-        <EntityTypeShape EntityType="EasyHardwareModel.Category" Width="1.5" PointX="0.5" PointY="9.125" />
+        <EntityTypeShape EntityType="EasyHardwareModel.Category" Width="1.5" PointX="2.875" PointY="9" />
         <AssociationConnector Association="EasyHardwareModel.FK_ParentCategory" />
-        <AssociationConnector Association="EasyHardwareModel.FK_ProductCategory_Category" />
+        <AssociationConnector Association="EasyHardwareModel.ProductCategory" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,6 +1,7 @@
 ﻿using Domain;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,17 @@ namespace Business.Services
         }
         public Product Add(EasyHardwareEntities context, Domain.Product product)
         {
+            ICollection<Category> categories = new List<Category>();
+            if (product.Categories.Any())
+            {
+                foreach (Category category in product.Categories)
+                {
+                    categories.Add(context.Category.Single(x => x.Id == category.Id));
+                }
+
+                product.Categories = categories;
+            }
+
             // add product to context
             context.Product.Add(product);
             // save changes
@@ -41,6 +53,16 @@ namespace Business.Services
             dbProduct.Description = product.Description;
             dbProduct.Name = product.Name;
             dbProduct.PartNumber = product.PartNumber;
+
+            ICollection<Category> categories = new List<Category>();
+            // get new categories ids
+            List<int> newCategories = product.Categories.Select(x => x.Id).ToList();
+            // get attached categories
+            categories = context.Category.Where(x => newCategories.Any(c => c == x.Id)).ToList();
+            // clear already product categories
+            dbProduct.Categories.Clear();
+            // assign the new categories
+            dbProduct.Categories = categories;
             // save changes after edit
             context.SaveChanges();
             // return edited product

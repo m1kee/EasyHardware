@@ -8,6 +8,5 @@ export interface IProduct {
     Description: string;
     PartNumber: string;
     Active: boolean;
-    ProductCategory: IProductCategory[];
     Categories: ICategory[];
 }

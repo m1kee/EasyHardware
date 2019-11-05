@@ -19,7 +19,7 @@ namespace Domain
         {
             this.Stocks = new HashSet<Stock>();
             this.PurchaseDetail = new HashSet<PurchaseDetail>();
-            this.ProductCategory = new HashSet<ProductCategory>();
+            this.Categories = new HashSet<Category>();
         }
     
         public int Id { get; set; }
@@ -34,6 +34,6 @@ namespace Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseDetail> PurchaseDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductCategory> ProductCategory { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
     }
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '@services/category.service';
-import { faShoppingCart, faAngleDown, faSignOutAlt, faUserCircle, faList, faBoxOpen, faStore, faBoxes } from '@fortawesome/free-solid-svg-icons';
-import { LocalStorageService } from '@services/local-storage.service';
+import { faShoppingCart, faAngleDown, faSignOutAlt, faUserCircle, faList, faBoxOpen, faStore, faBoxes, faCreditCard, faBroom, faFrown } from '@fortawesome/free-solid-svg-icons';
 import { ICategory } from '@domain/category';
+import { ShoppingCartService } from '@services/shopping-cart.service';
+import { ShoppingCartItem } from '@domain/shopping-cart-item';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +12,7 @@ import { ICategory } from '@domain/category';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private categoryService: CategoryService, private localStorageService: LocalStorageService) { }
+    constructor(private categoryService: CategoryService, private shoppingCartService: ShoppingCartService) { }
 
     categories: any = [];
     icons: any = {
@@ -22,29 +23,42 @@ export class NavbarComponent implements OnInit {
         faList: faList,
         faBoxOpen: faBoxOpen,
         faStore: faStore,
-        faBoxes: faBoxes
-    };
-    shoppingCart: any = {
-        items: []
+        faBoxes: faBoxes,
+        faCreditCard: faCreditCard,
+        faBroom: faBroom,
+        faFrown: faFrown
     };
     menuBehavior: any = {
         isCollapsed: true
     };
 
     ngOnInit() {
-        // TODO: get shopping cart items from localstorage
-        this.shoppingCart.items.push('Notebook Gamer');
-        this.shoppingCart.items.push('PC Gamer');
-        this.shoppingCart.items.push('SSD 512 GB');
-        this.shoppingCart.items.push('NVIDIA 2080TI');
-
         this.categoryService.getAll(true).subscribe((categories: ICategory[]) => {
             console.log('categories: ', categories);
             this.categories = categories;
         });
-    }
+    };
+
+    getCartItems(): ShoppingCartItem[] {
+        return this.shoppingCartService.get();
+    };
 
     logout() {
         console.log('you\'re successfully logout');
-    }
+    };
+
+    getCartTotal() {
+        let shoppingCart = this.getCartItems();
+        let total: number = 0;
+        if (shoppingCart && shoppingCart.length > 0) {
+            shoppingCart.forEach((cartItem: ShoppingCartItem) => {
+                total += cartItem.Count * cartItem.Item.Price;
+            });
+        }
+        return total;
+    };
+
+    clearShoppingCart() {
+        this.shoppingCartService.clear();
+    };
 }
