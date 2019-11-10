@@ -16,6 +16,7 @@ namespace API
             container.RegisterType<ICategoryService, CategoryService>();
             container.RegisterType<IProductService, ProductService>();
             container.RegisterType<IStoreService, StoreService>();
+            container.RegisterType<IAuthService, AuthService>();
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

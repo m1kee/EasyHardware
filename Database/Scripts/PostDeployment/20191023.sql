@@ -7,10 +7,13 @@ INSERT INTO [dbo].[Profile] ([Name], [Description], [Active])
 	VALUES ('Client', 'User of EasyHardware', 1);
 
 -- Super User
-DECLARE @adminId INT;
+DECLARE @adminId INT, 
+		@client INT;
 SELECT @adminId = [Id] FROM [dbo].[Profile] WHERE [Name] = 'Administrator';
+SELECT @client = [Id] FROM [dbo].[Profile] WHERE [Name] = 'Client';
 INSERT INTO [dbo].[User] ([Name], [LastName], [UserName], [Password], [Email], [Phone], [ProfileId]) 
-	VALUES ('Michael Joseph', 'Núñez Bobadilla', 'M1kee', '1445217533e7d4d0cffd9109c4edb60d62a02c0f0de9537be44f5e00d348eb4f', 'michael.nunezb@outlook.com', '+56944738082', @adminId);
+	VALUES ('Michael Joseph', 'Núñez Bobadilla', 'M1kee', '3512d6fe0c8c23857ca0b8a7fc9a7bbf6ce0dc6ce6d4b0caaa100c92cf1dcf35', 'michael.nunezb@outlook.com', '+56944738082', @adminId),
+		   ('Juan', 'Pérez', 'Ju4n', '3512d6fe0c8c23857ca0b8a7fc9a7bbf6ce0dc6ce6d4b0caaa100c92cf1dcf35', 'juan.perez@outlook.com', '+56944738083', @client);
 
 -- Categories
 INSERT INTO [dbo].[Category] ([Name], [Code], [ParentCategoryId], [Description], [Order], [Active]) 

@@ -53,6 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\Auth\AuthService.cs" />
+    <Compile Include="Services\Auth\IAuthService.cs" />
     <Compile Include="Services\Category\CategoryService.cs" />
     <Compile Include="Services\Category\ICategoryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

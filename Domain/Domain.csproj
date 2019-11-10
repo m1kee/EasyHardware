@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Address.cs">
+    <Compile Include="Adress.cs">
       <DependentUpon>EasyHardwareModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Category.cs">
@@ -99,7 +99,7 @@
     <Compile Include="User.cs">
       <DependentUpon>EasyHardwareModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserAddress.cs">
+    <Compile Include="UserAdress.cs">
       <DependentUpon>EasyHardwareModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -63,7 +63,17 @@ export class ShoppingCartService {
         this.localStorageService.set(this.storageKey, products);
     };
 
-    remove(product: any) {
+    remove(id: any, products?: any[]) {
+        if (!products || products.length === 0) {
+            products = this.get();
+        }
+
+        products.splice(products.findIndex((element) => element.Id === id), 1);
+        // reset the shopping cart values
+        this.localStorageService.set(this.storageKey, products);
+    }
+
+    substract(product: any) {
         // get storage items
         let products = this.get();
         if (!products || products.length === 0) {
@@ -75,7 +85,7 @@ export class ShoppingCartService {
             if (!cartItem) {
                 return;
             } else if ((cartItem.Count - 1 === 0)) {
-                this.remove(product);
+                this.remove(product.Id, products);
             } else {
                 // add -1 to the count and re insert to the array
                 cartItem.Count--;

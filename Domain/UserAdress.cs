@@ -12,15 +12,15 @@ namespace Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class UserAddress
+    public partial class UserAdress
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public int AddressId { get; set; }
+        public int AdressId { get; set; }
         public Nullable<bool> IsDefault { get; set; }
         public Nullable<bool> Active { get; set; }
     
-        public virtual Address Address { get; set; }
+        public virtual Adress Adress { get; set; }
         public virtual User User { get; set; }
     }
 }

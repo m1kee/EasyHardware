@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <button class="navbar-toggler"
           type="button"
           (click)="menuBehavior.isCollapsed = !menuBehavior.isCollapsed"
@@ -13,7 +13,7 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown" dropdown [autoClose]="true" *ngFor="let category of categories">
         <a class="nav-link text-white" id="navbarDropdown" role="button" [routerLink]="['/product-list', category.Code]" routerLinkActive="active">
-           {{ category.Name }}
+          {{ category.Name }}
           <span class="badge badge-pill badge-primary clickable" (click)="$event.stopPropagation(); $event.preventDefault();">
             <fa-icon [icon]="icons.faAngleDown" *ngIf="category.SubCategories && category.SubCategories.length > 0" dropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></fa-icon>
           </span>
@@ -35,111 +35,159 @@
     </ul>
   </div>
 
-  <form id="user-menu" class="form-inline">
-    <div class="btn-group" dropdown [autoClose]="false">
-      <button class="btn btn-primary" type="button" dropdownToggle id="cart-button" aria-controls="shopping-cart-dropdown" style="border-radius: .25rem !important;">
-        <fa-icon [icon]="icons.faShoppingCart"></fa-icon>&nbsp;
-        <span class="badge badge-light"
-              style="margin-left: 5px;">
-          {{ getCartItems().length }}
-        </span>
-      </button>
+  <!-- Shopping cart widget -->
+  <div class="btn-group" dropdown [autoClose]="false">
+    <button class="btn btn-primary" type="button" dropdownToggle id="cart-button" aria-controls="shopping-cart-dropdown" style="border-radius: .25rem !important;">
+      <fa-icon [icon]="icons.faShoppingCart"></fa-icon>&nbsp;
+      <span class="badge badge-light"
+            style="margin-left: 5px;">
+        {{ getCartItems().length }}
+      </span>
+    </button>
 
-      <div id="shopping-cart-dropdown" *dropdownMenu class="dropdown-menu dropdown-menu-right " role="menu" aria-labelledby="cart-button">
-        <div class="cart-item pt-0 pb-0">
-          <div class="row cart-title pb-2">
-            <div class="col-12">
-              <small>
-                <b class="text-primary">
-                  Carro de compras
-                </b>
-              </small>
-              <button (click)="clearShoppingCart()" type="button" class="btn btn-xs btn-outline-danger float-right" title="Vaciar carro de compras">
-                <fa-icon [icon]="icons.faBroom"></fa-icon>
-              </button>
-            </div>
+    <div id="shopping-cart-dropdown" *dropdownMenu class="dropdown-menu dropdown-menu-right " role="menu" aria-labelledby="cart-button">
+      <div class="cart-item pt-0 pb-0">
+        <div class="row cart-title pb-2">
+          <div class="col-12">
+            <small>
+              <b class="text-primary">
+                Carro de compras
+              </b>
+            </small>
+            <button (click)="clearShoppingCart()" type="button" class="btn btn-xs btn-outline-danger float-right" title="Vaciar carro de compras">
+              <fa-icon [icon]="icons.faBroom"></fa-icon>
+            </button>
           </div>
         </div>
+      </div>
 
-        <div class="scrollable">
-          <div class="cart-item text-center" *ngIf="getCartItems().length === 0">
-            <small class="text-muted">
-              A&uacute;n no hay items en el carrito <fa-icon [icon]="icons.faFrown"></fa-icon>
-            </small>
-          </div>
-          <div *ngFor="let cartItem of getCartItems(); let last = last">
-            <div class="cart-item">
-              <div class="row">
-                <div class="col-1 pr-0">
-                  <small>
-                    <b>
-                      {{ cartItem.Count }} x
-                    </b>
-                  </small>
-                </div>
-                <div class="col-8">
-                  <div class="media">
-                    <img src="https://broxtechnology.com/images/iconos/box.png" style="width: 64px; height: auto;" alt="product" class="img-fluid" />
-                    <div class="media-body text-wrap">
-                      <span>
-                        <small>
-                          <b>
-                            {{ cartItem.Item.Name }}
-                          </b>
-                        </small>
-                      </span>
-                      <br />
-                      <small>
-                        {{ cartItem.Item.Description }}
-                      </small>
+      <div class="scrollable">
+        <div class="cart-item text-center" *ngIf="getCartItems().length === 0">
+          <small class="text-muted">
+            A&uacute;n no hay items en el carrito <fa-icon [icon]="icons.faFrown"></fa-icon>
+          </small>
+        </div>
+        <div *ngFor="let cartItem of getCartItems(); let last = last">
+          <div class="cart-item">
+            <div class="row">
+              <div class="col-9 pr-0 pl-2">
+                <div class="media">
+                  <img src="https://broxtechnology.com/images/iconos/box.png" style="width: 64px; height: auto;" alt="product" class="img-fluid" />
+                  <div class="media-body">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-12 text-wrap">
+                          <span>
+                            <small>
+                              <b>
+                                {{ cartItem.Item.Name }}
+                              </b>
+                            </small>
+                          </span>
+                        </div>
+                        <div class="col-12 pr-0" style="max-height: 70px; overflow-y: hidden; text-overflow: ellipsis;">
+                          <small>
+                            {{ cartItem.Item.Description }}
+                          </small>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-3 text-right">
-                  <b class="text-primary"> {{ cartItem.Item.Price | currency:'CLP':'C/U $' }} </b>
+              </div>
+              <div class="col-3 pl-0 pr-2 text-right">
+                <div class="row">
+                  <div class="col-12">
+                    <small>
+                      <b> {{ cartItem.Count }} x </b> <b class="text-primary"> {{ cartItem.Item.Price | currency:'CLP':'$' }} </b>
+                    </small>
+                  </div>
+                  <div class="col-12">
+                    <fa-icon [icon]="icons.faMinus"
+                             (click)="substractFromCart(cartItem.Item)"
+                             title="Quitar unidad"
+                             class="clickable text-danger mr-3"
+                             aria-hidden="true"></fa-icon>
+
+                    <fa-icon [icon]="icons.faPlus"
+                             (click)="addToCart(cartItem.Item)"
+                             title="Agregar unidad"
+                             class="clickable text-success mr-3"
+                             aria-hidden="true"></fa-icon>
+
+                    <fa-icon [icon]="icons.faTrashAlt"
+                             (click)="removeFromCart(cartItem.Id)"
+                             title="Remover del carro"
+                             class="clickable text-danger"
+                             aria-hidden="true"></fa-icon>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="dropdown-divider" *ngIf="!last"></div>
           </div>
+          <div class="dropdown-divider" *ngIf="!last"></div>
         </div>
-        <div class="cart-item">
-          <div class="row cart-footer">
-            <div class="col-4">
-              <button type="button" class="btn btn-success btn-block">
-                <fa-icon [icon]="icons.faCreditCard"></fa-icon>&nbsp;
-                Pagar
-              </button>
-            </div>
-            <div class="col-8 text-right">
-              <small>
-                <b>
-                  TOTAL: <span class="text-primary">{{ getCartTotal() | currency:'CLP':'$' }}</span>
-                </b>
-              </small>
-            </div>
+      </div>
+      <div class="cart-item">
+        <div class="row cart-footer">
+          <div class="col-4">
+            <button type="button" class="btn btn-success btn-block">
+              <fa-icon [icon]="icons.faCreditCard"></fa-icon>&nbsp;
+              Pagar
+            </button>
+          </div>
+          <div class="col-8 text-right">
+            <small aria-hidden="true">
+              <b>
+                TOTAL: <span class="text-primary">{{ getCartTotal() | currency:'CLP':'$' }}</span>
+              </b>
+            </small>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="btn-group" dropdown style="margin-left: 5px;">
-      <a class="nav-link dropdown-toggle clickable text-white"
-         id="navbarDropdown"
-         dropdownToggle
-         role="button"
-         aria-controls="dropdown-animated">
-        Michael Núñez
+  </div>
+  <!-- Login Button -->
+  <div *ngIf="!isAuthenticated()" dropdown class="btn-group mr-1" [autoClose]="false">
+    <a class="nav-link clickable text-white" id="sign-in" role="button" dropdownToggle aria-controls="dropdown-sign-in">
+      Iniciar Sesión
+    </a>
+    <div id="dropdown-sign-in" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="sign-in">
+      <form class="px-2 py-0" #login="ngForm" novalidate>
+        <div class="form-group">
+          <label for="username" class="col-form-label-sm">Nombre de Usuario:</label>
+          <input name="username" #username="ngModel" required [(ngModel)]="credentials.Username" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="password" class="col-form-label-sm">Contraseña:</label>
+          <input name="password" #password="ngModel" required [(ngModel)]="credentials.Password" type="password" class="form-control">
+        </div>
+        <button type="button" class="btn btn-primary btn-block" (click)="signIn()" [disabled]="login.invalid">Entrar</button>
+      </form>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">¿Nuevo aqu&iacute;? <span class="text-primary">Reg&iacute;strate</span>.</a>
+      <a class="dropdown-item" href="#">¿Olvidaste tu contraseña?</a>
+    </div>
+  </div>
+  <!-- Logged user menu -->
+  <div class="btn-group mr-1" dropdown *ngIf="isAuthenticated()">
+    <a class="nav-link dropdown-toggle clickable text-white"
+       id="navbarDropdown"
+       dropdownToggle
+       role="button"
+       aria-controls="dropdown-animated">
+      {{ user.Name }} {{ user.LastName }}
+    </a>
+    <div id="dropdown-animated" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item clickable" [routerLink]="['/maintenance/my-account']" routerLinkActive="active">
+        <fa-icon [icon]="icons.faUserCircle" [fixedWidth]="true"></fa-icon>&nbsp;
+        Mi cuenta
       </a>
-      <div id="dropdown-animated" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item clickable" [routerLink]="['/maintenance/my-account']" routerLinkActive="active">
-          <fa-icon [icon]="icons.faUserCircle" [fixedWidth]="true"></fa-icon>&nbsp;
-          Mi cuenta
-        </a>
-        <a class="dropdown-item clickable" (click)="logout()">
-          <fa-icon [icon]="icons.faSignOutAlt" [fixedWidth]="true"></fa-icon>&nbsp;
-          Salir
-        </a>
+      <a class="dropdown-item clickable" (click)="logout()">
+        <fa-icon [icon]="icons.faSignOutAlt" [fixedWidth]="true"></fa-icon>&nbsp;
+        Salir
+      </a>
+      <div *ngIf="hasPermissions([admin])">
         <div class="dropdown-divider"></div>
         <h6 class="dropdown-header">Mantenedores</h6>
         <a class="dropdown-item clickable" [routerLink]="['/maintenance/category']" routerLinkActive="active">
@@ -160,5 +208,5 @@
         </a>
       </div>
     </div>
-  </form>
+  </div>
 </nav>

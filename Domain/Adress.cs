@@ -12,16 +12,15 @@ namespace Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Address
+    public partial class Adress
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Address()
+        public Adress()
         {
-            this.UserAddress = new HashSet<UserAddress>();
+            this.UserAdresses = new HashSet<UserAdress>();
         }
     
         public int Id { get; set; }
-        public int UserId { get; set; }
         public string Street { get; set; }
         public string StreetNumber { get; set; }
         public Nullable<decimal> Floor { get; set; }
@@ -30,7 +29,6 @@ namespace Domain
         public string PostalCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserAddress> UserAddress { get; set; }
-        public virtual User User { get; set; }
+        public virtual ICollection<UserAdress> UserAdresses { get; set; }
     }
 }

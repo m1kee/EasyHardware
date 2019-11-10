@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[UserAdress]
+(
+	[Id] INT NOT NULL CONSTRAINT [PK_UserAdress] PRIMARY KEY IDENTITY(1,1),
+	[UserId] INT NOT NULL CONSTRAINT [FK_UserAdress_User] FOREIGN KEY REFERENCES [dbo].[User](Id),
+	[AdressId] INT NOT NULL CONSTRAINT [FK_UserAdress_Address] FOREIGN KEY REFERENCES [dbo].[Adress](Id),
+	[IsDefault] BIT CONSTRAINT [FK_Default] DEFAULT (0),
+	[Active] BIT CONSTRAINT [FK_Active] DEFAULT (1)
+)

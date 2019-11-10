@@ -5,12 +5,11 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EasyHardwareModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Address">
+        <EntityType Name="Adress">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Street" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="StreetNumber" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="Floor" Type="numeric" Precision="3" Scale="0" />
@@ -118,28 +117,16 @@
           <Property Name="Phone" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="ProfileId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserAddress">
+        <EntityType Name="UserAdress">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="AddressId" Type="int" Nullable="false" />
+          <Property Name="AdressId" Type="int" Nullable="false" />
           <Property Name="IsDefault" Type="bit" />
           <Property Name="Active" Type="bit" />
         </EntityType>
-        <Association Name="FK_Address_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ParentCategory">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="Category1" Type="Self.Category" Multiplicity="*" />
@@ -260,32 +247,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserAddress_Address">
-          <End Role="Address" Type="Self.Address" Multiplicity="1" />
-          <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
+        <Association Name="FK_UserAdress_Address">
+          <End Role="Adress" Type="Self.Adress" Multiplicity="1" />
+          <End Role="UserAdress" Type="Self.UserAdress" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Address">
+            <Principal Role="Adress">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UserAddress">
-              <PropertyRef Name="AddressId" />
+            <Dependent Role="UserAdress">
+              <PropertyRef Name="AdressId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserAddress_User">
+        <Association Name="FK_UserAdress_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
+          <End Role="UserAdress" Type="Self.UserAdress" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UserAddress">
+            <Dependent Role="UserAdress">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="EasyHardwareModelStoreContainer">
-          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Adress" EntityType="Self.Adress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
@@ -296,11 +283,7 @@
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserAddress" EntityType="Self.UserAddress" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Address_User" Association="Self.FK_Address_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
+          <EntitySet Name="UserAdress" EntityType="Self.UserAdress" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ParentCategory" Association="Self.FK_ParentCategory">
             <End Role="Category" EntitySet="Category" />
             <End Role="Category1" EntitySet="Category" />
@@ -341,34 +324,19 @@
             <End Role="Profile" EntitySet="Profile" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserAddress_Address" Association="Self.FK_UserAddress_Address">
-            <End Role="Address" EntitySet="Address" />
-            <End Role="UserAddress" EntitySet="UserAddress" />
+          <AssociationSet Name="FK_UserAdress_Address" Association="Self.FK_UserAdress_Address">
+            <End Role="Adress" EntitySet="Adress" />
+            <End Role="UserAdress" EntitySet="UserAdress" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserAddress_User" Association="Self.FK_UserAddress_User">
+          <AssociationSet Name="FK_UserAdress_User" Association="Self.FK_UserAdress_User">
             <End Role="User" EntitySet="User" />
-            <End Role="UserAddress" EntitySet="UserAddress" />
+            <End Role="UserAdress" EntitySet="UserAdress" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EasyHardwareModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Street" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StreetNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Floor" Type="Decimal" Precision="3" Scale="0" />
-          <Property Name="Office" Type="Decimal" Precision="5" Scale="0" />
-          <Property Name="City" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PostalCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="UserAddress" Relationship="Self.FK_Address" FromRole="Address" ToRole="UserAddress" />
-          <NavigationProperty Name="User" Relationship="Self.FK_AddressUser" FromRole="Address" ToRole="User" />
-        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="Id" />
@@ -461,47 +429,10 @@
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProfileId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Address" Relationship="Self.FK_AddressUser" FromRole="User" ToRole="Address" />
           <NavigationProperty Name="Profile" Relationship="Self.FK_UserProfile" FromRole="User" ToRole="Profile" />
           <NavigationProperty Name="Purchase" Relationship="Self.FK_PurchaseClient" FromRole="User" ToRole="Purchase" />
-          <NavigationProperty Name="UserAddress" Relationship="Self.FK_User" FromRole="User" ToRole="UserAddress" />
+          <NavigationProperty Name="UserAdresses" Relationship="EasyHardwareModel.FK_UserAdress_User" FromRole="User" ToRole="UserAdress" />
         </EntityType>
-        <EntityType Name="UserAddress">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="AddressId" Type="Int32" Nullable="false" />
-          <Property Name="IsDefault" Type="Boolean" />
-          <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="Address" Relationship="Self.FK_Address" FromRole="UserAddress" ToRole="Address" />
-          <NavigationProperty Name="User" Relationship="Self.FK_User" FromRole="UserAddress" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_Address">
-          <End Role="Address" Type="Self.Address" Multiplicity="1" />
-          <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserAddress">
-              <PropertyRef Name="AddressId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AddressUser">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProductStock">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
@@ -586,20 +517,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserAddress">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="EasyHardwareEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Address" EntityType="Self.Address" />
           <EntitySet Name="Product" EntityType="Self.Product" />
           <EntitySet Name="Profile" EntityType="Self.Profile" />
           <EntitySet Name="Purchase" EntityType="Self.Purchase" />
@@ -608,15 +526,6 @@
           <EntitySet Name="Stock" EntityType="Self.Stock" />
           <EntitySet Name="Store" EntityType="Self.Store" />
           <EntitySet Name="User" EntityType="Self.User" />
-          <EntitySet Name="UserAddress" EntityType="Self.UserAddress" />
-          <AssociationSet Name="FK_Address" Association="Self.FK_Address">
-            <End Role="Address" EntitySet="Address" />
-            <End Role="UserAddress" EntitySet="UserAddress" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AddressUser" Association="Self.FK_AddressUser">
-            <End Role="User" EntitySet="User" />
-            <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProductStock" Association="Self.FK_ProductStock">
             <End Role="Product" EntitySet="Product" />
             <End Role="Stock" EntitySet="Stock" />
@@ -645,10 +554,6 @@
             <End Role="Store" EntitySet="Store" />
             <End Role="Stock" EntitySet="Stock" />
           </AssociationSet>
-          <AssociationSet Name="FK_User" Association="Self.FK_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="UserAddress" EntitySet="UserAddress" />
-          </AssociationSet>
           <EntitySet Name="Category" EntityType="EasyHardwareModel.Category" />
           <AssociationSet Name="FK_ParentCategory" Association="EasyHardwareModel.FK_ParentCategory">
             <End Role="Category" EntitySet="Category" />
@@ -657,6 +562,16 @@
           <AssociationSet Name="ProductCategory" Association="EasyHardwareModel.ProductCategory">
             <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <EntitySet Name="Adress" EntityType="EasyHardwareModel.Adress" />
+          <EntitySet Name="UserAdress" EntityType="EasyHardwareModel.UserAdress" />
+          <AssociationSet Name="FK_UserAdress_Address" Association="EasyHardwareModel.FK_UserAdress_Address">
+            <End Role="Adress" EntitySet="Adress" />
+            <End Role="UserAdress" EntitySet="UserAdress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAdress_User" Association="EasyHardwareModel.FK_UserAdress_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserAdress" EntitySet="UserAdress" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Category">
@@ -690,26 +605,61 @@
           <End Type="EasyHardwareModel.Category" Role="Category" Multiplicity="*" />
           <End Type="EasyHardwareModel.Product" Role="Product" Multiplicity="*" />
         </Association>
+        <EntityType Name="Adress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Street" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="StreetNumber" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Floor" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="Office" Type="Decimal" Precision="5" Scale="0" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserAdresses" Relationship="EasyHardwareModel.FK_UserAdress_Address" FromRole="Adress" ToRole="UserAdress" />
+        </EntityType>
+        <EntityType Name="UserAdress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AdressId" Type="Int32" Nullable="false" />
+          <Property Name="IsDefault" Type="Boolean" />
+          <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="Adress" Relationship="EasyHardwareModel.FK_UserAdress_Address" FromRole="UserAdress" ToRole="Adress" />
+          <NavigationProperty Name="User" Relationship="EasyHardwareModel.FK_UserAdress_User" FromRole="UserAdress" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserAdress_Address">
+          <End Type="EasyHardwareModel.Adress" Role="Adress" Multiplicity="1" />
+          <End Type="EasyHardwareModel.UserAdress" Role="UserAdress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adress">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAdress">
+              <PropertyRef Name="AdressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAdress_User">
+          <End Type="EasyHardwareModel.User" Role="User" Multiplicity="1" />
+          <End Type="EasyHardwareModel.UserAdress" Role="UserAdress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAdress">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="EasyHardwareModelStoreContainer" CdmEntityContainer="EasyHardwareEntities">
-          <EntitySetMapping Name="Address">
-            <EntityTypeMapping TypeName="EasyHardwareModel.Address">
-              <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
-                <ScalarProperty Name="Floor" ColumnName="Floor" />
-                <ScalarProperty Name="Office" ColumnName="Office" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Product">
             <EntityTypeMapping TypeName="EasyHardwareModel.Product">
               <MappingFragment StoreEntitySet="Product">
@@ -798,17 +748,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserAddress">
-            <EntityTypeMapping TypeName="EasyHardwareModel.UserAddress">
-              <MappingFragment StoreEntitySet="UserAddress">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="EasyHardwareModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -830,6 +769,30 @@
               <ScalarProperty Name="Id" ColumnName="CategoryId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Adress">
+            <EntityTypeMapping TypeName="EasyHardwareModel.Adress">
+              <MappingFragment StoreEntitySet="Adress">
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Office" ColumnName="Office" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAdress">
+            <EntityTypeMapping TypeName="EasyHardwareModel.UserAdress">
+              <MappingFragment StoreEntitySet="UserAdress">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+                <ScalarProperty Name="AdressId" ColumnName="AdressId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

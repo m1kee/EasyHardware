@@ -2,10 +2,11 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -38,6 +39,10 @@ import { RegisterComponent } from '@components/shared/register/register.componen
 import { ForgotPasswordComponent } from '@components/shared/forgot-password/forgot-password.component';
 /* Shared Services */
 import { LocalStorageService } from '@services/local-storage.service';
+import { AuthService } from '@services/auth.service';
+/* Interceptors */
+import { JwtInterceptor } from '@helpers/interceptors/jwt.interceptor';
+import { ErrorInterceptor } from '@helpers/interceptors/error.interceptor';
 
 
 
@@ -85,6 +90,7 @@ import { LocalStorageService } from '@services/local-storage.service';
         }),
         CollapseModule.forRoot(),
         BsDropdownModule.forRoot(),
+        TooltipModule.forRoot(),
         NgMultiSelectDropDownModule.forRoot(),
         NgxPaginationModule,
         SweetAlert2Module.forRoot({
@@ -94,11 +100,14 @@ import { LocalStorageService } from '@services/local-storage.service';
         }),
     ],
     providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         CategoryService,
         ProductService,
         StoreService,
         ShoppingCartService,
-        LocalStorageService
+        LocalStorageService,
+        AuthService
     ],
     bootstrap: [AppComponent]
 })

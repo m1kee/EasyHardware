@@ -3,15 +3,18 @@
   cursor: pointer;
 }
 
-body {
+/* uncomment for fixed navbar*/
+/*body {
   padding-top: 70px;
-}
+}*/
 
 .scrollable {
   float: left;
   max-height: 450px;
   min-width: 500px;
+  max-width: 500px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 div::-webkit-scrollbar-track {
