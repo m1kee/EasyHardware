@@ -30,6 +30,8 @@ import { StoreService } from '@services/store.service';
 /* Shopping Cart */
 import { ShoppingCartComponent } from '@components/shared/shopping-cart/shopping-cart.component';
 import { ShoppingCartService } from '@services/shopping-cart.service';
+/* Stock */
+import { StockComponent } from './components/stock/stock.component';
 /* Shared Components */
 import { PageNotFoundComponent } from '@components/shared/page-not-found/page-not-found.component';
 import { WorkInProgressComponent } from '@components/shared/work-in-progress/work-in-progress.component';
@@ -43,6 +45,7 @@ import { AuthService } from '@services/auth.service';
 /* Interceptors */
 import { JwtInterceptor } from '@helpers/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from '@helpers/interceptors/error.interceptor';
+
 
 
 
@@ -61,7 +64,8 @@ import { ErrorInterceptor } from '@helpers/interceptors/error.interceptor';
         CategoryCrudComponent,
         ProductCrudComponent,
         StoreCrudComponent,
-        ShoppingCartComponent
+        ShoppingCartComponent,
+        StockComponent
     ],
     imports: [
         BrowserModule,

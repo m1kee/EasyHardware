@@ -92,6 +92,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="StoreId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Store">
           <Key>
@@ -404,6 +405,7 @@
           <Property Name="StoreId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Self.FK_ProductStock" FromRole="Stock" ToRole="Product" />
           <NavigationProperty Name="Store" Relationship="Self.FK_ProductStore" FromRole="Stock" ToRole="Store" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Store">
           <Key>
@@ -716,6 +718,7 @@
           <EntitySetMapping Name="Stock">
             <EntityTypeMapping TypeName="EasyHardwareModel.Stock">
               <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="StoreId" ColumnName="StoreId" />
