@@ -31,7 +31,8 @@ import { StoreService } from '@services/store.service';
 import { ShoppingCartComponent } from '@components/shared/shopping-cart/shopping-cart.component';
 import { ShoppingCartService } from '@services/shopping-cart.service';
 /* Stock */
-import { StockComponent } from './components/stock/stock.component';
+import { StockComponent } from '@components/stock/stock.component';
+import { StockService } from '@services/stock.service'
 /* Shared Components */
 import { PageNotFoundComponent } from '@components/shared/page-not-found/page-not-found.component';
 import { WorkInProgressComponent } from '@components/shared/work-in-progress/work-in-progress.component';
@@ -111,7 +112,8 @@ import { ErrorInterceptor } from '@helpers/interceptors/error.interceptor';
         StoreService,
         ShoppingCartService,
         LocalStorageService,
-        AuthService
+        AuthService,
+        StockService
     ],
     bootstrap: [AppComponent]
 })
