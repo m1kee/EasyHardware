@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Transactions;
 using System.Web.Http;
 
 namespace API.Controllers
@@ -13,10 +14,12 @@ namespace API.Controllers
     public class ProductController : ApiController
     {
         private readonly IProductService productService;
+        private readonly IStockService stockService;
         private readonly EasyHardwareEntities context = new EasyHardwareEntities();
 
-        public ProductController(IProductService productService) {
+        public ProductController(IProductService productService, IStockService stockService) {
             this.productService = productService;
+            this.stockService = stockService;
         }
 
         [HttpGet]
@@ -81,8 +84,18 @@ namespace API.Controllers
 
             try
             {
-                // TODO: validate things
-                result = Ok(this.productService.Add(context, product));
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    // creating the product
+                    Product createdProduct = this.productService.Add(context, product);
+                    // generate stock for the product
+                    this.stockService.GenerateStock(context, createdProduct);
+                    // commit the transaction
+                    scope.Complete();
+
+                    // generate response
+                    result = Ok(createdProduct);
+                }
             }
             catch (Exception ex)
             {
