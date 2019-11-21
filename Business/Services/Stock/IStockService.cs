@@ -11,5 +11,7 @@ namespace Business.Services
     {
         void GenerateStock(EasyHardwareEntities context, Product product);
         void GenerateStock(EasyHardwareEntities context, Store store);
+        IList<Stock> Get(EasyHardwareEntities context, int? storeId, string productName);
+        Stock Edit(EasyHardwareEntities context, int stockId, Stock stock);
     }
 }
