@@ -21,6 +21,11 @@ export class ProductListComponent implements OnInit {
         faStarHalfAlt: faStarHalfAlt,
         faShoppingCart: faShoppingCart
     };
+    paginationConfig: any = {
+        itemsPerPage: 10,
+        currentPage: 1,
+        totalItems: this.products.length
+    };
     constructor(private productService: ProductService,
         private activatedRoute: ActivatedRoute,
         private categoryService: CategoryService,
@@ -55,7 +60,39 @@ export class ProductListComponent implements OnInit {
         }
     };
 
+    getBadgeClass(product: IProduct): string {
+        if (!product)
+            return;
+
+        if (product.DefaultStock) {
+            if (product.DefaultStock.Quantity === 0)
+                return 'secondary';
+            else if (product.DefaultStock.Quantity > 0 && product.DefaultStock.Quantity <= 5)
+                return 'danger';
+            else
+                return 'success';
+        }
+    };
+
+    getBadgeText(product: IProduct): string {
+        if (!product)
+            return;
+
+        if (product.DefaultStock) {
+            if (product.DefaultStock.Quantity === 0)
+                return 'Agotado';
+            else if (product.DefaultStock.Quantity > 0 && product.DefaultStock.Quantity <= 5)
+                return 'Crítico';
+            else
+                return 'Disponible';
+        }
+    };
+
     addToCart(product: IProduct): void {
         this.shoppingCartService.add(product);
+    };
+
+    productPageChanged(event) {
+        this.paginationConfig.currentPage = event;
     };
 }

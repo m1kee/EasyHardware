@@ -12,8 +12,7 @@ namespace Business.Services
     {
         public IList<Product> Get(EasyHardwareEntities context)
         {
-            return context.Product.Where(x => x.Active)
-                                  .ToList();
+            return context.Product.Where(x => x.Active).ToList();
         }
         public Product Get(EasyHardwareEntities context, int productId)
         {

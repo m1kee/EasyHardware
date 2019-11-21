@@ -5,11 +5,14 @@ import { WorkInProgressComponent } from '@components/shared/work-in-progress/wor
 import { CategoryCrudComponent } from '@components/maintenance/category-crud/category-crud.component';
 import { StoreCrudComponent } from '@components/maintenance/store-crud/store-crud.component';
 import { ProductCrudComponent } from './components/maintenance/product-crud/product-crud.component';
+import { PurchaseListComponent } from './components/purchases/purchase-list/purchase-list.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/product-list', pathMatch: 'full' },
     { path: 'product-list', component: ProductListComponent },
     { path: 'product-list/:categoryCode', component: ProductListComponent },
+    { path: 'purchase-list', component: PurchaseListComponent },
+    { path: 'purchase-list/:purchaseCode', component: PurchaseListComponent },
     { path: 'maintenance/category', component: CategoryCrudComponent },
     { path: 'maintenance/category/:categoryCode', component: CategoryCrudComponent },
     { path: 'maintenance/product', component: ProductCrudComponent },

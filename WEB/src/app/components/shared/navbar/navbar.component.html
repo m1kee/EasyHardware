@@ -131,9 +131,9 @@
       <div class="cart-item">
         <div class="row cart-footer">
           <div class="col-4">
-            <button type="button" class="btn btn-success btn-block">
+            <button type="button" class="btn btn-success btn-block" (click)="pay()" [disabled]="payButton.isLoading">
               <fa-icon [icon]="icons.faCreditCard"></fa-icon>&nbsp;
-              Pagar
+              {{ payButton.message }}
             </button>
           </div>
           <div class="col-8 text-right">
@@ -182,6 +182,10 @@
       <a class="dropdown-item clickable" [routerLink]="['/maintenance/my-account']" routerLinkActive="active">
         <fa-icon [icon]="icons.faUserCircle" [fixedWidth]="true"></fa-icon>&nbsp;
         Mi cuenta
+      </a>
+      <a class="dropdown-item clickable" [routerLink]="['/purchase-list/']" routerLinkActive="active">
+        <fa-icon [icon]="icons.faReceipt" [fixedWidth]="true"></fa-icon>&nbsp;
+        Mis compras
       </a>
       <a class="dropdown-item clickable" (click)="logout()">
         <fa-icon [icon]="icons.faSignOutAlt" [fixedWidth]="true"></fa-icon>&nbsp;

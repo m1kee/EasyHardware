@@ -1,5 +1,5 @@
-import { IProductCategory } from '@domain/product-category';
 import { ICategory } from '@domain/category';
+import { IStock } from '@domain/stock';
 
 export interface IProduct {
     Id: number;
@@ -8,5 +8,6 @@ export interface IProduct {
     Description: string;
     PartNumber: string;
     Active: boolean;
-    Categories: ICategory[];
+    Categories?: ICategory[];
+    DefaultStock?: IStock;
 }

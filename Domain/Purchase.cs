@@ -21,14 +21,15 @@ namespace Domain
         }
     
         public int Id { get; set; }
-        public int Total { get; set; }
+        public decimal Total { get; set; }
         public int Client { get; set; }
         public System.DateTime Date { get; set; }
         public int StateId { get; set; }
+        public System.Guid Code { get; set; }
     
+        public virtual PurchaseState PurchaseState { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseDetail> PurchaseDetail { get; set; }
-        public virtual PurchaseState PurchaseState { get; set; }
     }
 }

@@ -18,7 +18,6 @@ export class ShoppingCartService {
         if (products && products.length > 0) {
             let cartItem = products.filter(p => p.Id === productId);
             if (cartItem && cartItem[0]) {
-                console.log('cartItem: ', cartItem[0]);
                 return cartItem[0];
             }
         }

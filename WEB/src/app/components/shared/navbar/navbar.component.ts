@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '@services/category.service';
-import { faShoppingCart, faAngleDown, faSignOutAlt, faUserCircle, faList, faBoxOpen, faStore, faBoxes, faCreditCard, faBroom, faFrown, faPlus, faMinus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faAngleDown, faSignOutAlt, faUserCircle, faList, faBoxOpen, faStore, faBoxes, faCreditCard, faBroom, faFrown, faPlus, faMinus, faTrashAlt, faReceipt } from '@fortawesome/free-solid-svg-icons';
 import { ICategory } from '@domain/category';
 import { ShoppingCartService } from '@services/shopping-cart.service';
 import { ShoppingCartItem } from '@domain/shopping-cart-item';
@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Profiles } from '@domain/enums';
 import { Router } from '@angular/router';
 import { IProduct } from '@domain/product';
+import { PurchaseService } from '../../../services/purchase.service';
 
 @Component({
     selector: 'app-navbar',
@@ -24,7 +25,8 @@ export class NavbarComponent implements OnInit {
         private shoppingCartService: ShoppingCartService,
         private authService: AuthService,
         private toastrService: ToastrService,
-        private router: Router
+        private router: Router,
+        private purchaseService: PurchaseService
     ) { }
 
     categories: any = [];
@@ -42,7 +44,8 @@ export class NavbarComponent implements OnInit {
         faFrown: faFrown,
         faPlus: faPlus,
         faMinus: faMinus,
-        faTrashAlt: faTrashAlt
+        faTrashAlt: faTrashAlt,
+        faReceipt: faReceipt 
     };
     menuBehavior: any = {
         isCollapsed: true
@@ -54,6 +57,8 @@ export class NavbarComponent implements OnInit {
         this.categoryService.getAll(true).subscribe((categories: ICategory[]) => {
             console.log('categories: ', categories);
             this.categories = categories;
+        }, (error) => {
+              console.log('categories error: ', error);
         });
 
         this.authService.loggedUser.subscribe((user: IUser) => {
@@ -63,17 +68,14 @@ export class NavbarComponent implements OnInit {
 
     // Shopping cart stuff
     addToCart(product: IProduct): void {
-        console.log('adding to cart: ', product);
         this.shoppingCartService.add(product);
     };
 
     substractFromCart(product: IProduct): void {
-        console.log('substracting from cart: ', product);
         this.shoppingCartService.substract(product);
     };
 
     removeFromCart(productId: number): void {
-        console.log('removing to cart: ', productId);
         this.shoppingCartService.remove(productId);
     };
 
@@ -96,6 +98,39 @@ export class NavbarComponent implements OnInit {
         this.shoppingCartService.clear();
     };
 
+    payButton: any = this.getDefaultPayButton();
+
+    getDefaultPayButton() {
+        return {
+            message: 'Pagar',
+            isLoading: false
+        };
+    };
+
+    pay() {
+        if (!this.isAuthenticated()) {
+            this.toastrService.error('Para pagar debe iniciar sesión.', 'Error');
+            return;
+        }
+
+        if (this.getCartItems().length === 0) {
+            this.toastrService.error('No hay items en el carrito de compras.', 'Error');
+            return;
+        }
+
+        this.payButton.isLoading = true;
+        this.payButton.message = 'Pagando...';
+
+        this.purchaseService.post(this.user.Id, this.shoppingCartService.get()).subscribe((response: any) => {
+            this.payButton = this.getDefaultPayButton();
+            this.toastrService.success('Su compra se ha efectuado correctamente.', 'Pago Registrado');
+            this.clearShoppingCart();
+        },
+        (error) => {
+            this.payButton = this.getDefaultPayButton();
+            this.toastrService.error('No se pudo procesar su pago, intente nuevamente.', 'Error');
+        });
+    };
 
     // Authentication stuff
     credentials: ICredentials = {

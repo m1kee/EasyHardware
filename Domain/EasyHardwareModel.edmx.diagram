@@ -7,18 +7,12 @@
       <Diagram DiagramId="b9b35fda1a0440ca9c169720d0d517c7" Name="Diagram1">
         <EntityTypeShape EntityType="EasyHardwareModel.Product" Width="1.5" PointX="5.25" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="EasyHardwareModel.Profile" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EasyHardwareModel.Purchase" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EasyHardwareModel.PurchaseDetail" Width="1.5" PointX="7.5" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EasyHardwareModel.PurchaseState" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EasyHardwareModel.Stock" Width="1.5" PointX="7.5" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EasyHardwareModel.Store" Width="1.5" PointX="7.5" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EasyHardwareModel.User" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
         <AssociationConnector Association="EasyHardwareModel.FK_ProductStock" ManuallyRouted="false" />
-        <AssociationConnector Association="EasyHardwareModel.FK_PurchaseProduct" ManuallyRouted="false" />
         <AssociationConnector Association="EasyHardwareModel.FK_UserProfile" ManuallyRouted="false" />
-        <AssociationConnector Association="EasyHardwareModel.FK_PurchaseClient" ManuallyRouted="false" />
-        <AssociationConnector Association="EasyHardwareModel.FK_PurchaseId" ManuallyRouted="false" />
-        <AssociationConnector Association="EasyHardwareModel.FK_PurchaseState" ManuallyRouted="false" />
         <AssociationConnector Association="EasyHardwareModel.FK_ProductStore" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EasyHardwareModel.Category" Width="1.5" PointX="2.875" PointY="9" />
         <AssociationConnector Association="EasyHardwareModel.FK_ParentCategory" />
@@ -27,6 +21,12 @@
         <EntityTypeShape EntityType="EasyHardwareModel.UserAdress" Width="1.5" PointX="6.375" PointY="4.625" />
         <AssociationConnector Association="EasyHardwareModel.FK_UserAdress_Address" />
         <AssociationConnector Association="EasyHardwareModel.FK_UserAdress_User" />
+        <EntityTypeShape EntityType="EasyHardwareModel.PurchaseDetail" Width="1.5" PointX="7.875" PointY="1" />
+        <AssociationConnector Association="EasyHardwareModel.FK_PurchaseDetail_Product" />
+        <EntityTypeShape EntityType="EasyHardwareModel.Purchase" Width="1.5" PointX="5.25" PointY="0.875" />
+        <AssociationConnector Association="EasyHardwareModel.FK_Purchase_PurchaseState" />
+        <AssociationConnector Association="EasyHardwareModel.FK_Purchase_User" />
+        <AssociationConnector Association="EasyHardwareModel.FK_PurchaseDetail_Purchase" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

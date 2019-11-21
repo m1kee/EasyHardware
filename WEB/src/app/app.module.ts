@@ -33,6 +33,10 @@ import { ShoppingCartService } from '@services/shopping-cart.service';
 /* Stock */
 import { StockComponent } from '@components/stock/stock.component';
 import { StockService } from '@services/stock.service'
+/* Purchase */
+import { PurchaseListComponent } from './components/purchases/purchase-list/purchase-list.component';
+import { PurchaseDetailComponent } from './components/purchases/purchase-detail/purchase-detail.component';
+import { PurchaseService } from '@services/purchase.service';
 /* Shared Components */
 import { PageNotFoundComponent } from '@components/shared/page-not-found/page-not-found.component';
 import { WorkInProgressComponent } from '@components/shared/work-in-progress/work-in-progress.component';
@@ -46,6 +50,7 @@ import { AuthService } from '@services/auth.service';
 /* Interceptors */
 import { JwtInterceptor } from '@helpers/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from '@helpers/interceptors/error.interceptor';
+
 
 
 
@@ -66,7 +71,9 @@ import { ErrorInterceptor } from '@helpers/interceptors/error.interceptor';
         ProductCrudComponent,
         StoreCrudComponent,
         ShoppingCartComponent,
-        StockComponent
+        StockComponent,
+        PurchaseListComponent,
+        PurchaseDetailComponent
     ],
     imports: [
         BrowserModule,
@@ -109,6 +116,7 @@ import { ErrorInterceptor } from '@helpers/interceptors/error.interceptor';
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         CategoryService,
         ProductService,
+        PurchaseService,
         StoreService,
         ShoppingCartService,
         LocalStorageService,

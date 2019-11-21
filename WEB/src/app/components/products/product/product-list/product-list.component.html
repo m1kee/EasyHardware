@@ -11,14 +11,26 @@
   </div>
   <div class="col-xl-10 col-xs-12">
     <div class="row">
-      <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-xs-12 product-card" *ngFor="let product of products">
+      <div class="col-12">
+        <div id="pagination" class="text-center">
+          <pagination-controls (pageChange)="productPageChanged($event)"
+                               previousLabel="Atrás"
+                               nextLabel="Siguiente"
+                               autoHide="true"
+                               responsive="true">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-xs-6 product-card" *ngFor="let product of products | paginate: paginationConfig">
         <div class="card">
           <!--Card image-->
           <div class="product-image">
             <img src="https://broxtechnology.com/images/iconos/box.png" class="card-img-top" alt="photo">
           </div>
           <!--Card content-->
-          <div class="card-body">
+          <div class="card-body pb-1">
             <!--Title-->
             <h4 class="card-title text-wrap" title="{{product.Name}}">{{ product.Name }}</h4>
             <!-- Rating -->
@@ -33,11 +45,14 @@
             <p>
               {{ product.Description }}
             </p>
-            <div class="text-right">
+            <div>
               <button class="btn btn-block btn-primary" (click)="addToCart(product)">
                 <fa-icon [icon]="icons.faShoppingCart" [fixedWidth]="true"></fa-icon>
                 Añadir al Carrito
               </button>
+            </div>
+            <div class="mb-1 mt-1 text-right">
+              <small> <strong> Stock: </strong>  <span class="badge badge-{{ getBadgeClass(product) }}" [ngClass]="{  }">{{getBadgeText(product)}}</span></small>
             </div>
           </div>
           <div class="card-footer bg-transparent">

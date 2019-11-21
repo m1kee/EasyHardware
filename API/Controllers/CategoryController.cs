@@ -31,7 +31,7 @@ namespace API.Controllers
 
             try
             {
-                result = Ok(this.categoryService.Get(context, onlyUnparent));
+                result = Ok(this.categoryService.Get(context, onlyUnparent).MapAll(true));
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace API.Controllers
 
             try
             {
-                result = Ok(this.categoryService.Get(context, categoryId));
+                result = Ok(this.categoryService.Get(context, categoryId).Map(true));
             }
             catch (Exception ex)
             {
@@ -77,7 +77,7 @@ namespace API.Controllers
 
             try
             {
-                result = Ok(this.categoryService.Get(context, categoryCode));
+                result = Ok(this.categoryService.Get(context, categoryCode).Map(true));
             }
             catch (Exception ex)
             {

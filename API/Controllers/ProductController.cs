@@ -31,7 +31,7 @@ namespace API.Controllers
 
             try
             {
-                result = Ok(this.productService.Get(context));
+                result = Ok(this.productService.Get(context).MapAll(false));
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace API.Controllers
 
             try
             {
-                result = Ok(this.productService.Get(context, productId));
+                result = Ok(this.productService.Get(context, productId).Map(true));
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace API.Controllers
 
             try
             {
-                result = Ok(this.productService.Get(context, productPartNumber));
+                result = Ok(this.productService.Get(context, productPartNumber).Map(true));
             }
             catch (Exception ex)
             {
