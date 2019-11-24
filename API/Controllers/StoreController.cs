@@ -99,7 +99,7 @@ namespace API.Controllers
                     scope.Complete();
 
                     // generate response
-                    result = Ok(createdStore);
+                    result = Ok(createdStore.Map(true));
                 }
             }
             catch (Exception ex)
@@ -117,7 +117,7 @@ namespace API.Controllers
             try
             {
                 // TODO: validate things
-                result = Ok(this.storeService.Edit(context, storeId, store));
+                result = Ok(this.storeService.Edit(context, storeId, store).Map(true));
             }
             catch (Exception ex)
             {
@@ -134,7 +134,7 @@ namespace API.Controllers
             try
             {
                 // TODO: validate things
-                result = Ok(this.storeService.Delete(context, storeId));
+                result = Ok(this.storeService.Delete(context, storeId).Map(true));
             }
             catch (Exception ex)
             {

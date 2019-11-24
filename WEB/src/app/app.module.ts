@@ -31,7 +31,7 @@ import { StoreService } from '@services/store.service';
 import { ShoppingCartComponent } from '@components/shared/shopping-cart/shopping-cart.component';
 import { ShoppingCartService } from '@services/shopping-cart.service';
 /* Stock */
-import { StockComponent } from '@components/stock/stock.component';
+import { StockCrudComponent } from './components/maintenance/stock-crud/stock-crud.component';
 import { StockService } from '@services/stock.service'
 /* Purchase */
 import { PurchaseListComponent } from './components/purchases/purchase-list/purchase-list.component';
@@ -71,9 +71,9 @@ import { ErrorInterceptor } from '@helpers/interceptors/error.interceptor';
         ProductCrudComponent,
         StoreCrudComponent,
         ShoppingCartComponent,
-        StockComponent,
         PurchaseListComponent,
-        PurchaseDetailComponent
+        PurchaseDetailComponent,
+        StockCrudComponent
     ],
     imports: [
         BrowserModule,

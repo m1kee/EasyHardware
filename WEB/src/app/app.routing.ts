@@ -6,6 +6,7 @@ import { CategoryCrudComponent } from '@components/maintenance/category-crud/cat
 import { StoreCrudComponent } from '@components/maintenance/store-crud/store-crud.component';
 import { ProductCrudComponent } from './components/maintenance/product-crud/product-crud.component';
 import { PurchaseListComponent } from './components/purchases/purchase-list/purchase-list.component';
+import { StockCrudComponent } from './components/maintenance/stock-crud/stock-crud.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/product-list', pathMatch: 'full' },
@@ -19,7 +20,7 @@ const routes: Routes = [
     { path: 'maintenance/product/:productCode', component: ProductCrudComponent },
     { path: 'maintenance/store', component: StoreCrudComponent },
     { path: 'maintenance/store/:storeCode', component: StoreCrudComponent },
-    { path: 'maintenance/stock', component: WorkInProgressComponent },
+    { path: 'maintenance/stock', component: StockCrudComponent },
     { path: 'maintenance/my-account', component: WorkInProgressComponent },
     { path: '**', component: PageNotFoundComponent }
 ];

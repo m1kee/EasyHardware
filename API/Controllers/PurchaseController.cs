@@ -31,7 +31,7 @@ namespace API.Controllers
 
             try
             {
-                result = Ok(this.purchaseService.GetAll(context, userId));
+                result = Ok(this.purchaseService.GetAll(context, userId).MapAll(true));
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace API.Controllers
 
             try
             {
-                result = Ok(this.purchaseService.Get(context, purchaseId));
+                result = Ok(this.purchaseService.Get(context, purchaseId).Map(true));
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace API.Controllers
 
             try
             {
-                result = Ok(this.purchaseService.Get(context, purchaseCode));
+                result = Ok(this.purchaseService.Get(context, purchaseCode).Map(true));
             }
             catch (Exception ex)
             {
@@ -113,7 +113,7 @@ namespace API.Controllers
                     PurchaseDetail = purchaseDetails
                 };
 
-                result = Ok(this.purchaseService.Add(context, purchase));
+                result = Ok(this.purchaseService.Add(context, purchase).Map(true));
             }
             catch (Exception ex)
             {

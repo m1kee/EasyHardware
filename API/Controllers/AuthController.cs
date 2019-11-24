@@ -43,7 +43,7 @@ namespace API.Controllers
 
                     User user = authService.SignIn(context, credentials.Username, credentials.Password);
                     if (user != null)
-                        result = Ok(user);
+                        result = Ok(user.Map(true));
                     else
                         throw new Exception($"Credenciales incorrectas.");
                 }

@@ -36,7 +36,7 @@
   </div>
 
   <!-- Shopping cart widget -->
-  <div class="btn-group" dropdown [autoClose]="false">
+  <div class="btn-group" dropdown #cartDropdown="bs-dropdown" [insideClick]="true" [autoClose]="false">
     <button class="btn btn-primary" type="button" dropdownToggle id="cart-button" aria-controls="shopping-cart-dropdown" style="border-radius: .25rem !important;">
       <fa-icon [icon]="icons.faShoppingCart"></fa-icon>&nbsp;
       <span class="badge badge-light"
@@ -131,7 +131,7 @@
       <div class="cart-item">
         <div class="row cart-footer">
           <div class="col-4">
-            <button type="button" class="btn btn-success btn-block" (click)="pay()" [disabled]="payButton.isLoading">
+            <button type="button" class="btn btn-success btn-block" (click)="pay(cartDropdown, loginForm)" [disabled]="payButton.isLoading">
               <fa-icon [icon]="icons.faCreditCard"></fa-icon>&nbsp;
               {{ payButton.message }}
             </button>
@@ -148,25 +148,27 @@
     </div>
   </div>
   <!-- Login Button -->
-  <div *ngIf="!isAuthenticated()" dropdown class="btn-group mr-1" [autoClose]="false">
-    <a class="nav-link clickable text-white" id="sign-in" role="button" dropdownToggle aria-controls="dropdown-sign-in">
-      Iniciar Sesión
-    </a>
-    <div id="dropdown-sign-in" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="sign-in">
-      <form class="px-2 py-0" #login="ngForm" novalidate>
-        <div class="form-group">
-          <label for="username" class="col-form-label-sm">Nombre de Usuario:</label>
-          <input name="username" #username="ngModel" required [(ngModel)]="credentials.Username" type="text" class="form-control">
-        </div>
-        <div class="form-group">
-          <label for="password" class="col-form-label-sm">Contraseña:</label>
-          <input name="password" #password="ngModel" required [(ngModel)]="credentials.Password" type="password" class="form-control">
-        </div>
-        <button type="button" class="btn btn-primary btn-block" (click)="signIn()" [disabled]="login.invalid">Entrar</button>
-      </form>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="#">¿Nuevo aqu&iacute;? <span class="text-primary">Reg&iacute;strate</span>.</a>
-      <a class="dropdown-item" href="#">¿Olvidaste tu contraseña?</a>
+  <div [hidden]="isAuthenticated()">
+    <div dropdown #loginForm="bs-dropdown" class="btn-group mr-1" [insideClick]="true" [autoClose]="false">
+      <a class="nav-link clickable text-white" id="sign-in" role="button" dropdownToggle aria-controls="dropdown-sign-in">
+        Iniciar Sesión
+      </a>
+      <div id="dropdown-sign-in" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="sign-in">
+        <form class="px-2 py-0" #login="ngForm" novalidate>
+          <div class="form-group">
+            <label for="username" class="col-form-label-sm">Nombre de Usuario:</label>
+            <input name="username" #username="ngModel" required [(ngModel)]="credentials.Username" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="password" class="col-form-label-sm">Contraseña:</label>
+            <input name="password" #password="ngModel" required [(ngModel)]="credentials.Password" type="password" class="form-control">
+          </div>
+          <button type="button" class="btn btn-primary btn-block" (click)="signIn()" [disabled]="login.invalid">Entrar</button>
+        </form>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">¿Nuevo aqu&iacute;? <span class="text-primary">Reg&iacute;strate</span>.</a>
+        <a class="dropdown-item" href="#">¿Olvidaste tu contraseña?</a>
+      </div>
     </div>
   </div>
   <!-- Logged user menu -->

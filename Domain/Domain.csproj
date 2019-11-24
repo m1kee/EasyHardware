@@ -80,10 +80,17 @@
     </Compile>
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Persistency\Adress.cs" />
     <Compile Include="Persistency\Category.cs" />
     <Compile Include="Persistency\Product.cs" />
+    <Compile Include="Persistency\Profile.cs" />
+    <Compile Include="Persistency\Purchase.cs" />
+    <Compile Include="Persistency\PurchaseDetail.cs" />
+    <Compile Include="Persistency\PurchaseState.cs" />
     <Compile Include="Persistency\Stock.cs" />
     <Compile Include="Persistency\Store.cs" />
+    <Compile Include="Persistency\User.cs" />
+    <Compile Include="Persistency\UserAdress.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>EasyHardwareModel.tt</DependentUpon>
     </Compile>

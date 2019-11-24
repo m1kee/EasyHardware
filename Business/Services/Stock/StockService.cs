@@ -63,11 +63,21 @@ namespace Business.Services
             return stock;
         }
 
-        public IList<Stock> Get(EasyHardwareEntities context, int? storeId, string productName)
+        public IList<Stock> Get(EasyHardwareEntities context, List<int> storeIds, string productName)
         {
-            return context.Stock.Where(x => storeId == null || x.StoreId == storeId)
-                .Where(x => string.IsNullOrWhiteSpace(productName) || x.Product.Name.Contains($"/{productName}/"))
-                .ToList();
+            var stocks = context.Stock.AsQueryable();
+
+            if (storeIds != null && storeIds.Any())
+            {
+                stocks = stocks.Where(x => storeIds.Any(y => y == x.StoreId));
+            }
+
+            if (!string.IsNullOrWhiteSpace(productName))
+            {
+                stocks = stocks.Where(x => x.Product.Name.Contains(productName));
+            }
+
+            return stocks.ToList();
         }
     }
 }

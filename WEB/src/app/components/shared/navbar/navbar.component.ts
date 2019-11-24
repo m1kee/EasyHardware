@@ -13,6 +13,9 @@ import { Profiles } from '@domain/enums';
 import { Router } from '@angular/router';
 import { IProduct } from '@domain/product';
 import { PurchaseService } from '../../../services/purchase.service';
+import Swal, { SweetAlertOptions } from 'sweetalert2';
+import { IPurchase } from '../../../domain/purchase';
+import { BsDropdownToggleDirective } from 'ngx-bootstrap/dropdown/public_api';
 
 @Component({
     selector: 'app-navbar',
@@ -107,9 +110,11 @@ export class NavbarComponent implements OnInit {
         };
     };
 
-    pay() {
+    pay(shoppingCartDropdown: BsDropdownToggleDirective, loginFormDropdown: BsDropdownToggleDirective) {
         if (!this.isAuthenticated()) {
             this.toastrService.error('Para pagar debe iniciar sesión.', 'Error');
+            shoppingCartDropdown.isOpen = false;
+            loginFormDropdown.isOpen = true;
             return;
         }
 
@@ -120,11 +125,36 @@ export class NavbarComponent implements OnInit {
 
         this.payButton.isLoading = true;
         this.payButton.message = 'Pagando...';
+        this.purchaseService.post(this.user.Id, this.shoppingCartService.get()).subscribe((purchase: IPurchase) => {
+            let timerInterval;
+            let options: SweetAlertOptions = {
+                title: 'Pagando...',
+                html: '<span>Conectando con el servidor de pagos...</span>',
+                timer: 4000,
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                    let steps = ["Realizando pago...", "Restando stock...", "Generando boleta..."];
+                    let currentStep = -1;
 
-        this.purchaseService.post(this.user.Id, this.shoppingCartService.get()).subscribe((response: any) => {
-            this.payButton = this.getDefaultPayButton();
-            this.toastrService.success('Su compra se ha efectuado correctamente.', 'Pago Registrado');
-            this.clearShoppingCart();
+                    timerInterval = setInterval(() => {
+                        currentStep++;
+                        Swal.getContent().querySelector('span').textContent = steps[currentStep];
+                    }, 1000);
+                },
+                onClose: () => {
+                    clearInterval(timerInterval)
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }
+            Swal.fire(options).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    this.payButton = this.getDefaultPayButton();
+                    shoppingCartDropdown.isOpen = false;
+                    this.toastrService.success('Su compra se ha efectuado correctamente.', 'Pago Registrado');
+                    this.clearShoppingCart();
+                    this.router.navigate(['/purchase-list', purchase.Code]);
+                }
+            })
         },
         (error) => {
             this.payButton = this.getDefaultPayButton();

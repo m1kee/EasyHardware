@@ -31,7 +31,8 @@ namespace API.Controllers
 
             try
             {
-                result = Ok(this.stockService.Get(context, stockFilters.StoreId, stockFilters.ProductName));
+                List<int> storeIds = stockFilters.Stores?.Any() ?? false ? stockFilters.Stores.Select(x => x.Id).ToList() : null;
+                result = Ok(this.stockService.Get(context, storeIds, stockFilters.ProductName).MapAll(true));
             }
             catch (Exception ex)
             {
@@ -49,7 +50,7 @@ namespace API.Controllers
             try
             {
                 // TODO: validate things
-                result = Ok(this.stockService.Edit(context, stockId, stock));
+                result = Ok(this.stockService.Edit(context, stockId, stock).Map(true));
             }
             catch (Exception ex)
             {

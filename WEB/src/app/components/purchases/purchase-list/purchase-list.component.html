@@ -1,10 +1,8 @@
 <div class="row m-3">
-  <div class="col-xs-12 col-lg-6 col-xl-6">
-    <h1>
-      Historial de Compras
-    </h1>
+  <div [ngClass]="{ 'col-xs-12 col-lg-6 col-xl-6': currentPurchase, 'col-12': !currentPurchase }">
+    <h1> Historial de Compras  </h1>
     <hr />
-    <table class="table table-hover table-sm">
+    <table class="table table-bordered table-sm">
       <thead class="thead-light">
         <tr>
           <th scope="col">#</th>
@@ -16,21 +14,18 @@
       </thead>
       <tbody>
         <tr *ngFor="let purchase of purchases | paginate: paginationConfig">
-          <td>{{ purchase.Code }}</td>
-          <td>{{ purchase.Date }}</td>
-          <td>{{ purchase.Total }}</td>
+          <td>{{ purchase.Id }}</td>
+          <td>{{ purchase.Date | date:'dd/MM/yyyy hh:mm' }}</td>
+          <td>{{ purchase.Total | currency:'CLP':'$'}}</td>
           <td>
-            {{ purchase.State.Name }}
+            <span class="badge badge-{{ getBadgeClass(purchase) }}">
+              {{ purchase.PurchaseState.State }}
+            </span>
           </td>
           <td>
-            <!--<button (click)="edit(store)" type="button" class="btn btn-sm btn-default" style="margin-right: 5px;">
-            <fa-icon [icon]="icons.faEdit" [fixedWidth]="true"></fa-icon>
-          </button>
-          <button [swal]="['Advertencia!', '¿Está seguro de querer eliminar este elemento?', 'warning']"
-                  (confirm)="delete(store)"
-                  type="button" class="btn btn-default btn-sm">
-            <fa-icon [icon]="icons.faTrashAlt" [fixedWidth]="true"></fa-icon>
-          </button>-->
+            <button (click)="viewDetails(purchase)" type="button" class="btn btn-sm btn-default pt-0 pb-0">
+              <fa-icon [icon]="icons.faEye" [fixedWidth]="true"></fa-icon>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -44,5 +39,51 @@
       </pagination-controls>
     </div>
   </div>
-</div>
+  <div *ngIf="currentPurchase" class="col-xs-12 col-lg-6 col-xl-6">
+    <h1>
+      <button (click)="closeDetails()" type="button" class="btn btn-danger float-right mt-10px">
+        <fa-icon [icon]="icons.faTimes" [fixedWidth]="true"></fa-icon>
+      </button>
+      Detalle de compra: <small>
+        {{ currentPurchase.Date | date:'dd/MM/yyyy hh:mm' }}
+        <span class="badge badge-{{ getBadgeClass(currentPurchase) }}">
+          {{ currentPurchase.PurchaseState.State }}
+        </span>
+      </small>
+    </h1>
+    <hr />
+    <div class="float-right">
 
+    </div>
+    <table class="table table-bordered table-sm">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Producto</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Precio Unidad</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of currentPurchase.PurchaseDetail">
+          <td>{{ detail.Product.Name }}</td>
+          <td>{{ detail.Quantity }}</td>
+          <td>{{ detail.ProductValue | currency:'CLP':'$'}}</td>
+          <td>{{ (detail.ProductValue * detail.Quantity) | currency:'CLP':'$' }}</td>
+        </tr>
+        <tr class="">
+          <td colspan="3" class="text-right">
+            <b>
+              TOTAL:
+            </b>
+          </td>
+          <td>
+            <b>
+              {{ calculateTotal(currentPurchase.PurchaseDetail) | currency:'CLP':'$' }}
+            </b>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

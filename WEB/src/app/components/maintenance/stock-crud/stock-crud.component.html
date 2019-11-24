@@ -1,0 +1,74 @@
+<div class="row m-3">
+  <div class="col-12">
+    <h1>
+      Mantenci&oacute;n de Stock
+    </h1>
+    <hr />
+
+    <div id="filters">
+      <div class="row">
+        <!-- Name -->
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <input name="name"
+                 #name="ngModel"
+                 [(ngModel)]="filters.ProductName"
+                 type="text"
+                 class="form-control"
+                 id="product-name"
+                 placeholder="Ingresa el nombre del producto">
+        </div>
+        <!-- Store -->
+        <div class="col-xl-5 col-lg-15 col-md-5 col-sm-5 col-xs-12">
+          <ng-multiselect-dropdown [placeholder]="'Seleccione una o más sucursales'"
+                                   [data]="stores"
+                                   name="store"
+                                   [(ngModel)]="filters.Stores"
+                                   [settings]="dropdownSettings">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="col-1">
+          <button (click)="getAllStocks()" name="save-btn" type="button" class="btn btn-success" [disabled]="loading">
+            <fa-icon [icon]="icons.faSearch" [fixedWidth]="true"></fa-icon>&nbsp;
+            Buscar
+          </button>
+        </div>
+      </div>
+      <div class="row pt-3">
+        <div class="col-12">
+          <table class="table table-hover table-sm">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" class="w-50">Producto</th>
+                <th scope="col" class="w-20">Sucursal</th>
+                <th scope="col" class="w-20">Cantidad</th>
+                <th scope="col" class="w-10">Acci&oacute;n</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let stock of stocks | paginate: paginationConfig">
+                <td>{{ stock.Product.Name }}</td>
+                <td>{{ stock.Store.Name }}</td>
+                <td>
+                  <input type="number" class="form-control form-control-sm" [(ngModel)]="stock.Quantity" min="0"/>
+                </td>
+                <td>
+                  <button (click)="edit(stock)" type="button" class="btn btn-sm btn-default pt-0 pb-0">
+                    <fa-icon [icon]="icons.faEdit" [fixedWidth]="true"></fa-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div id="pagination" class="text-center">
+            <pagination-controls (pageChange)="pageChanged($event)"
+                                 previousLabel="Atrás"
+                                 nextLabel="Siguiente"
+                                 autoHide="true"
+                                 responsive="true">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

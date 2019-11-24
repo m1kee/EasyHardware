@@ -26,6 +26,9 @@ export class ProductListComponent implements OnInit {
         currentPage: 1,
         totalItems: this.products.length
     };
+    filters: any = {
+        ProductName: null
+    }
     constructor(private productService: ProductService,
         private activatedRoute: ActivatedRoute,
         private categoryService: CategoryService,
